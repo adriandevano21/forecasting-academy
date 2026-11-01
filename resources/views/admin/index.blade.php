@@ -107,16 +107,16 @@
             <main class="admin-container">
 
                 @if (session('success'))
-                    <div class="adm-alert adm-alert-success">
-                        <span>✅ {{ session('success') }}</span>
-                        <button type="button" onclick="this.parentElement.remove()">&times;</button>
-                    </div>
+                <div class="adm-alert adm-alert-success">
+                    <span>✅ {{ session('success') }}</span>
+                    <button type="button" onclick="this.parentElement.remove()">&times;</button>
+                </div>
                 @endif
                 @if (session('error') || $errors->any())
-                    <div class="adm-alert adm-alert-danger">
-                        <span>⚠️ {{ session('error') ?? $errors->first() }}</span>
-                        <button type="button" onclick="this.parentElement.remove()">&times;</button>
-                    </div>
+                <div class="adm-alert adm-alert-danger">
+                    <span>⚠️ {{ session('error') ?? $errors->first() }}</span>
+                    <button type="button" onclick="this.parentElement.remove()">&times;</button>
+                </div>
                 @endif
 
                 <!-- ==========================================================
@@ -210,24 +210,24 @@
                                 </thead>
                                 <tbody>
                                     @foreach ($tryouts as $to)
-                                        <tr>
-                                            <td><span class="badge-tag">{{ $to->code }}</span></td>
-                                            <td><strong>{{ $to->title }}</strong></td>
-                                            <td>{{ $to->program_name ?? 'Umum' }}</td>
-                                            <td>{{ $to->duration_minutes }} Menit</td>
-                                            <td>
-                                                <span class="toggle-btn on">
-                                                    {{ $to->actual_questions_count }} Soal (Target:
-                                                    {{ $to->total_questions }})
-                                                </span>
-                                            </td>
-                                            <td>
-                                                <a href="{{ route('admin.dashboard', ['tryout_id' => $to->id]) }}"
-                                                    class="btn-xs btn-primary">
-                                                    Kelola Soal ({{ $to->actual_questions_count }}) &rarr;
-                                                </a>
-                                            </td>
-                                        </tr>
+                                    <tr>
+                                        <td><span class="badge-tag">{{ $to->code }}</span></td>
+                                        <td><strong>{{ $to->title }}</strong></td>
+                                        <td>{{ $to->program_name ?? 'Umum' }}</td>
+                                        <td>{{ $to->duration_minutes }} Menit</td>
+                                        <td>
+                                            <span class="toggle-btn on">
+                                                {{ $to->actual_questions_count }} Soal (Target:
+                                                {{ $to->total_questions }})
+                                            </span>
+                                        </td>
+                                        <td>
+                                            <a href="{{ route('admin.dashboard', ['tryout_id' => $to->id]) }}"
+                                                class="btn-xs btn-primary">
+                                                Kelola Soal ({{ $to->actual_questions_count }}) &rarr;
+                                            </a>
+                                        </td>
+                                    </tr>
                                     @endforeach
                                 </tbody>
                             </table>
@@ -264,39 +264,39 @@
                                 </thead>
                                 <tbody>
                                     @foreach ($tryouts as $to)
-                                        <tr>
-                                            <td>
-                                                <span class="badge-tag">{{ $to->code }}</span>
-                                                <strong class="d-block mt-4">{{ $to->title }}</strong>
-                                                <small class="text-muted">{{ $to->instruction }}</small>
-                                            </td>
-                                            <td>
-                                                <strong>{{ $to->program_name ?? 'Umum' }}</strong><br>
-                                                <small class="text-muted">{{ $to->type }}</small>
-                                            </td>
-                                            <td>{{ $to->duration_minutes }} Menit</td>
-                                            <td>
-                                                <a href="{{ route('admin.dashboard', ['tryout_id' => $to->id]) }}"
-                                                    class="btn-xs btn-outline">
-                                                    ❓ {{ $to->actual_questions_count }} / {{ $to->total_questions }}
-                                                    Soal &rarr;
-                                                </a>
-                                            </td>
-                                            <td>
-                                                <button type="button"
-                                                    class="toggle-btn {{ $to->is_active ? 'on' : 'off' }}"
-                                                    onclick="toggleStatus('tryouts', {{ $to->id }}, 'is_active', 'tab-tryouts')">
-                                                    {{ $to->is_active ? 'Aktif' : 'Nonaktif' }}
-                                                </button>
-                                            </td>
-                                            <td>
-                                                <button type="button" class="btn-xs btn-edit"
-                                                    onclick='openTryoutModal(@json($to))'>✏️
-                                                    Edit</button>
-                                                <button type="button" class="btn-xs btn-danger"
-                                                    onclick="deleteRecord('tryouts', {{ $to->id }}, 'tab-tryouts')">Hapus</button>
-                                            </td>
-                                        </tr>
+                                    <tr>
+                                        <td>
+                                            <span class="badge-tag">{{ $to->code }}</span>
+                                            <strong class="d-block mt-4">{{ $to->title }}</strong>
+                                            <small class="text-muted">{{ $to->instruction }}</small>
+                                        </td>
+                                        <td>
+                                            <strong>{{ $to->program_name ?? 'Umum' }}</strong><br>
+                                            <small class="text-muted">{{ $to->type }}</small>
+                                        </td>
+                                        <td>{{ $to->duration_minutes }} Menit</td>
+                                        <td>
+                                            <a href="{{ route('admin.dashboard', ['tryout_id' => $to->id]) }}"
+                                                class="btn-xs btn-outline">
+                                                ❓ {{ $to->actual_questions_count }} / {{ $to->total_questions }}
+                                                Soal &rarr;
+                                            </a>
+                                        </td>
+                                        <td>
+                                            <button type="button"
+                                                class="toggle-btn {{ $to->is_active ? 'on' : 'off' }}"
+                                                onclick="toggleStatus('tryouts', {{ $to->id }}, 'is_active', 'tab-tryouts')">
+                                                {{ $to->is_active ? 'Aktif' : 'Nonaktif' }}
+                                            </button>
+                                        </td>
+                                        <td>
+                                            <button type="button" class="btn-xs btn-edit"
+                                                onclick='openTryoutModal(@json($to))'>✏️
+                                                Edit</button>
+                                            <button type="button" class="btn-xs btn-danger"
+                                                onclick="deleteRecord('tryouts', {{ $to->id }}, 'tab-tryouts')">Hapus</button>
+                                        </td>
+                                    </tr>
                                     @endforeach
                                 </tbody>
                             </table>
@@ -320,11 +320,11 @@
                                     <select name="tryout_id" class="adm-input" onchange="this.form.submit()"
                                         style="min-width:250px; font-weight:700;">
                                         @foreach ($tryouts as $t)
-                                            <option value="{{ $t->id }}"
-                                                {{ (string) $selectedTryoutId === (string) $t->id ? 'selected' : '' }}>
-                                                [{{ $t->code }}] {{ Str::limit($t->title, 34) }}
-                                                ({{ $t->actual_questions_count }} Soal)
-                                            </option>
+                                        <option value="{{ $t->id }}"
+                                            {{ (string) $selectedTryoutId === (string) $t->id ? 'selected' : '' }}>
+                                            [{{ $t->code }}] {{ Str::limit($t->title, 34) }}
+                                            ({{ $t->actual_questions_count }} Soal)
+                                        </option>
                                         @endforeach
                                         <option value="all" {{ $selectedTryoutId === 'all' ? 'selected' : '' }}>
                                             Tampilkan Semua Paket ({{ $summary['totalQuestions'] }} Soal)</option>
@@ -352,63 +352,64 @@
                                 </thead>
                                 <tbody>
                                     @foreach ($questions as $q)
-                                        <tr>
-                                            <td>
-                                                <span class="q-num-badge">No. {{ $q->question_number }}</span>
-                                                <small class="d-block text-muted mt-4">⏱️
-                                                    {{ $q->ideal_time_seconds }}s</small>
-                                            </td>
-                                            <td>
-                                                <span class="badge-tag">{{ $q->tryout_code }}</span>
-                                                <strong class="d-block mt-4">{{ $q->topic_name }}</strong>
-                                            </td>
-                                            <td>
-                                                <div class="q-preview">{{ $q->question_text }}</div>
-                                                @if ($q->question_image)
-                                                    <div class="img-preview-row">
-                                                        <img src="{{ $q->question_image }}" alt="Soal"
-                                                            class="adm-thumb">
-                                                        <a href="{{ $q->question_image }}" target="_blank"
-                                                            class="link-mini">🔗 Gambar Soal</a>
-                                                    </div>
-                                                @endif
-                                                <div class="opt-pills mt-6">
-                                                    @foreach ($q->options as $op)
-                                                        <div
-                                                            class="opt-pill {{ $op->score_weight >= 5 ? 'correct' : '' }}">
-                                                            <strong>{{ $op->option_label }}:</strong>
-                                                            {{ Str::limit($op->option_text, 24) }}
-                                                            ({{ $op->score_weight }})
-                                                            @if ($op->option_image)
-                                                                <a href="{{ $op->option_image }}" target="_blank"
-                                                                    class="opt-img-tag"
-                                                                    title="Lihat Gambar Opsi {{ $op->option_label }}">🖼️
-                                                                    Gambar</a>
-                                                            @endif
-                                                        </div>
-                                                    @endforeach
+                                    <tr>
+                                        <td>
+                                            <span class="q-num-badge">No. {{ $q->question_number }}</span>
+                                            <small class="d-block text-muted mt-4">⏱️
+                                                {{ $q->ideal_time_seconds }}s</small>
+                                        </td>
+                                        <td>
+                                            <span class="badge-tag">{{ $q->tryout_code }}</span>
+                                            <strong class="d-block mt-4">{{ $q->topic_name }}</strong>
+                                        </td>
+                                        <td>
+                                            <div class="q-preview">{{ $q->question_text }}</div>
+                                            @if ($q->question_image)
+                                            <div class="img-preview-row">
+                                                <img src="{{ $q->question_image }}" alt="Soal"
+                                                    class="adm-thumb">
+                                                <a href="{{ $q->question_image }}" target="_blank"
+                                                    class="link-mini">🔗 Gambar Soal</a>
+                                            </div>
+                                            @endif
+                                            <div class="opt-pills mt-6">
+                                                @foreach ($q->options as $op)
+                                                <div
+                                                    class="opt-pill {{ $op->score_weight >= 5 ? 'correct' : '' }}">
+                                                    <strong>{{ $op->option_label }}:</strong>
+                                                    {{ Str::limit($op->option_text, 24) }}
+                                                    ({{ $op->score_weight }})
+                                                    @if ($op->option_image)
+                                                    <a href="{{ $op->option_image }}" target="_blank"
+                                                        class="opt-img-tag"
+                                                        title="Lihat Gambar Opsi {{ $op->option_label }}">🖼️
+                                                        Gambar</a>
+                                                    @endif
                                                 </div>
-                                            </td>
-                                            <td>
-                                                <div class="disc-preview">
-                                                    {{ Str::limit($q->discussion_text, 100) ?: '—' }}</div>
-                                                @if ($q->discussion_image)
-                                                    <div class="img-preview-row mt-4">
-                                                        <img src="{{ $q->discussion_image }}" alt="Pembahasan"
-                                                            class="adm-thumb">
-                                                        <a href="{{ $q->discussion_image }}" target="_blank"
-                                                            class="link-mini">🔗 Gambar Bahasan</a>
-                                                    </div>
-                                                @endif
-                                            </td>
-                                            <td>
-                                                <button type="button" class="btn-xs btn-edit"
-                                                    onclick='openQuestionModal(@json($q))'>✏️
-                                                    Edit</button>
-                                                <button type="button" class="btn-xs btn-danger"
-                                                    onclick="deleteRecord('questions', {{ $q->id }}, 'tab-questions')">Hapus</button>
-                                            </td>
-                                        </tr>
+                                                @endforeach
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="disc-preview">
+                                                {{ Str::limit($q->discussion_text, 100) ?: '—' }}
+                                            </div>
+                                            @if ($q->discussion_image)
+                                            <div class="img-preview-row mt-4">
+                                                <img src="{{ $q->discussion_image }}" alt="Pembahasan"
+                                                    class="adm-thumb">
+                                                <a href="{{ $q->discussion_image }}" target="_blank"
+                                                    class="link-mini">🔗 Gambar Bahasan</a>
+                                            </div>
+                                            @endif
+                                        </td>
+                                        <td>
+                                            <button type="button" class="btn-xs btn-edit"
+                                                onclick='openQuestionModal(@json($q))'>✏️
+                                                Edit</button>
+                                            <button type="button" class="btn-xs btn-danger"
+                                                onclick="deleteRecord('questions', {{ $q->id }}, 'tab-questions')">Hapus</button>
+                                        </td>
+                                    </tr>
                                     @endforeach
                                 </tbody>
                             </table>
@@ -444,31 +445,44 @@
                                 </thead>
                                 <tbody>
                                     @foreach ($materials as $mt)
-                                        <tr>
-                                            <td><strong>#{{ $mt->id }} - {{ $mt->title }}</strong><br><small
-                                                    class="text-muted">{{ $mt->content_url }}</small></td>
-                                            <td><span
-                                                    class="badge-tag">{{ $mt->topic_name }}</span><br><small>{{ $mt->instructor_name }}</small>
-                                            </td>
-                                            <td>{{ strtoupper($mt->type) }} ({{ ceil($mt->duration / 60) }} mnt)</td>
-                                            <td>
-                                                <button type="button"
-                                                    class="toggle-btn {{ $mt->is_free_preview ? 'on' : 'off' }}"
-                                                    onclick="toggleStatus('materials', {{ $mt->id }}, 'is_free_preview', 'tab-materials')">
-                                                    {{ $mt->is_free_preview ? 'Gratis' : 'Berbayar' }}
-                                                </button>
-                                            </td>
-                                            <td>
-                                                <button type="button" class="btn-xs btn-edit"
-                                                    onclick='openMaterialModal(@json($mt))'>✏️
-                                                    Edit</button>
-                                                <button type="button" class="btn-xs btn-danger"
-                                                    onclick="deleteRecord('materials', {{ $mt->id }}, 'tab-materials')">Hapus</button>
-                                            </td>
-                                        </tr>
+                                    <tr>
+                                        <td><strong>#{{ $mt->id }} - {{ $mt->title }}</strong><br><small
+                                                class="text-muted">{{ $mt->content_url }}</small></td>
+                                        <td><span
+                                                class="badge-tag">{{ $mt->topic_name }}</span><br><small>{{ $mt->instructor_name }}</small>
+                                        </td>
+                                        <td>{{ strtoupper($mt->type) }} ({{ ceil($mt->duration / 60) }} mnt)</td>
+                                        <td>
+                                            <button type="button"
+                                                class="toggle-btn {{ $mt->is_free_preview ? 'on' : 'off' }}"
+                                                onclick="toggleStatus('materials', {{ $mt->id }}, 'is_free_preview', 'tab-materials')">
+                                                {{ $mt->is_free_preview ? 'Gratis' : 'Berbayar' }}
+                                            </button>
+                                        </td>
+                                        <td>
+                                            <button type="button" class="btn-xs btn-edit"
+                                                onclick='openMaterialModal(@json($mt))'>✏️
+                                                Edit</button>
+                                            <button type="button" class="btn-xs btn-danger"
+                                                onclick="deleteRecord('materials', {{ $mt->id }}, 'tab-materials')">Hapus</button>
+                                        </td>
+                                    </tr>
                                     @endforeach
                                 </tbody>
                             </table>
+                            <div class="mt-10">
+                                <label class="adm-label">Thumbnail / Gambar Banner Paket</label>
+                                <div style="display: flex; align-items: center; gap: 12px;">
+                                    <!-- Pratinjau Gambar Saat Edit -->
+                                    <div id="pkg_thumbnail_preview_wrapper" style="display: none;">
+                                        <img id="pkg_thumbnail_preview" src="" alt="Preview" style="width: 50px; height: 50px; object-fit: cover; border-radius: 6px; border: 1px solid #ccc;">
+                                    </div>
+
+                                    <!-- Input File Upload -->
+                                    <input type="file" name="thumbnail" id="pkg_thumbnail" class="adm-input" accept="image/*">
+                                </div>
+                                <small class="text-muted">Format: JPG, PNG, WEBP (Maksimal 2MB). Kosongkan jika tidak ingin mengubah gambar.</small>
+                            </div>
                         </div>
                     </div>
                 </section>
@@ -492,70 +506,56 @@
                             <table class="adm-table">
                                 <thead>
                                     <tr>
-                                        <th>Urutan, Nama Paket & Harga</th>
-                                        <th>Isi Bundling (Tryout, Video Materi & Private 1-on-1)</th>
-                                        <th>Tampil Beranda</th>
-                                        <th>Highlight</th>
+                                        <th>No</th>
+                                        <th>Nama Paket</th>
+                                        <th>Tipe</th>
+                                        <th>Harga</th>
+                                        <th>Highlight / Status</th>
+                                        <th>Thumbnail</th> <!-- Kolom Baru Tepat Setelah Highlight -->
                                         <th>Aksi</th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    @foreach ($packages as $pkg)
-                                        <tr>
-                                            <td>
-                                                <span class="badge-tag">{{ $pkg->type }}</span>
-                                                <strong class="d-block mt-4">#{{ $pkg->sort_order }} -
-                                                    {{ $pkg->name }}</strong>
-                                                <div class="mt-4">
-                                                    @if ($pkg->discount_price)
-                                                        <s class="text-muted">Rp
-                                                            {{ number_format($pkg->price, 0, ',', '.') }}</s>
-                                                        <strong class="text-blue"> Rp
-                                                            {{ number_format($pkg->discount_price, 0, ',', '.') }}</strong>
-                                                    @else
-                                                        <strong>Rp {{ number_format($pkg->price, 0, ',', '.') }}</strong>
-                                                    @endif
-                                                </div>
-                                            </td>
-                                            <td>
-                                                <div class="bundle-pills-wrap">
-                                                    @foreach ($pkg->bundled_tryouts as $bt)
-                                                        <span class="bundle-pill pill-to">🗂️
-                                                            {{ $bt }}</span>
-                                                    @endforeach
-                                                    @foreach ($pkg->bundled_materials as $bm)
-                                                        <span class="bundle-pill pill-mat">🎬
-                                                            {{ Str::limit($bm, 32) }}</span>
-                                                    @endforeach
-                                                    @if ($pkg->private_sessions_count > 0 || count($pkg->bundled_mentors) > 0)
-                                                        <span class="bundle-pill pill-priv">👨‍🏫
-                                                            {{ $pkg->private_sessions_count }}x Private 1-on-1
-                                                            ({{ implode(', ', $pkg->bundled_mentors) }})</span>
-                                                    @endif
-                                                </div>
-                                            </td>
-                                            <td>
-                                                <button type="button"
-                                                    class="toggle-btn {{ $pkg->show_on_homepage ? 'on' : 'off' }}"
-                                                    onclick="toggleStatus('packages', {{ $pkg->id }}, 'show_on_homepage', 'tab-packages')">
-                                                    {{ $pkg->show_on_homepage ? 'Tampil' : 'Sembunyi' }}
-                                                </button>
-                                            </td>
-                                            <td>
-                                                <button type="button"
-                                                    class="toggle-btn {{ $pkg->is_featured ? 'on' : 'off' }}"
-                                                    onclick="toggleStatus('packages', {{ $pkg->id }}, 'is_featured', 'tab-packages')">
-                                                    {{ $pkg->is_featured ? 'Ya' : 'Tidak' }}
-                                                </button>
-                                            </td>
-                                            <td>
-                                                <button type="button" class="btn-xs btn-edit"
-                                                    onclick='openPackageModal(@json($pkg))'>✏️
-                                                    Edit</button>
-                                                <button type="button" class="btn-xs btn-danger"
-                                                    onclick="deleteRecord('packages', {{ $pkg->id }}, 'tab-packages')">Hapus</button>
-                                            </td>
-                                        </tr>
+                                    @foreach($packages as $index => $pkg)
+                                    <tr>
+                                        <td>{{ $index + 1 }}</td>
+                                        <td>
+                                            <strong>{{ $pkg->name }}</strong>
+                                            <br><small class="text-muted">{{ $pkg->badge_text }}</small>
+                                        </td>
+                                        <td><span class="badge badge-info">{{ strtoupper($pkg->type) }}</span></td>
+                                        <td>
+                                            <div>Rp {{ number_format($pkg->price, 0, ',', '.') }}</div>
+                                            @if($pkg->discount_price)
+                                            <small class="text-success">Disc: Rp {{ number_format($pkg->discount_price, 0, ',', '.') }}</small>
+                                            @endif
+                                        </td>
+
+                                        <!-- Kolom Highlight / Status -->
+                                        <td>
+                                            @if($pkg->is_featured)
+                                            <span class="badge bg-warning text-dark">⭐ Rekomendasi</span>
+                                            @endif
+                                            @if($pkg->show_on_homepage)
+                                            <span class="badge bg-success">🏠 Beranda</span>
+                                            @endif
+                                        </td>
+
+                                        <!-- KOLOM THUMBNAIL BARU -->
+                                        <td>
+                                            @if($pkg->thumbnail)
+                                            <img src="{{ asset('storage/' . $pkg->thumbnail) }}" alt="Thumbnail" style="width: 60px; height: 40px; object-fit: cover; border-radius: 6px; border: 1px solid #ddd;">
+                                            @else
+                                            <span class="text-muted small">Belum ada gambar</span>
+                                            @endif
+                                        </td>
+
+                                        <td>
+                                            <button type="button" class="btn-xs btn-edit" onclick="openPackageModal({{ json_encode($pkg) }})">
+                                                ✏️ Edit
+                                            </button>
+                                        </td>
+                                    </tr>
                                     @endforeach
                                 </tbody>
                             </table>
@@ -585,26 +585,26 @@
                                 </thead>
                                 <tbody>
                                     @foreach ($programs as $pr)
-                                        <tr>
-                                            <td><strong>#{{ $pr->sort_order }} -
-                                                    {{ $pr->name }}</strong><br><small
-                                                    class="text-muted">{{ $pr->badge_text }}</small></td>
-                                            <td>{{ $pr->description }}</td>
-                                            <td>
-                                                <button type="button"
-                                                    class="toggle-btn {{ $pr->show_on_homepage ? 'on' : 'off' }}"
-                                                    onclick="toggleStatus('programs', {{ $pr->id }}, 'show_on_homepage', 'tab-curriculum')">
-                                                    {{ $pr->show_on_homepage ? 'Tampil' : 'Sembunyi' }}
-                                                </button>
-                                            </td>
-                                            <td>
-                                                <button type="button" class="btn-xs btn-edit"
-                                                    onclick='openProgramModal(@json($pr))'>✏️
-                                                    Edit</button>
-                                                <button type="button" class="btn-xs btn-danger"
-                                                    onclick="deleteRecord('programs', {{ $pr->id }}, 'tab-curriculum')">Hapus</button>
-                                            </td>
-                                        </tr>
+                                    <tr>
+                                        <td><strong>#{{ $pr->sort_order }} -
+                                                {{ $pr->name }}</strong><br><small
+                                                class="text-muted">{{ $pr->badge_text }}</small></td>
+                                        <td>{{ $pr->description }}</td>
+                                        <td>
+                                            <button type="button"
+                                                class="toggle-btn {{ $pr->show_on_homepage ? 'on' : 'off' }}"
+                                                onclick="toggleStatus('programs', {{ $pr->id }}, 'show_on_homepage', 'tab-curriculum')">
+                                                {{ $pr->show_on_homepage ? 'Tampil' : 'Sembunyi' }}
+                                            </button>
+                                        </td>
+                                        <td>
+                                            <button type="button" class="btn-xs btn-edit"
+                                                onclick='openProgramModal(@json($pr))'>✏️
+                                                Edit</button>
+                                            <button type="button" class="btn-xs btn-danger"
+                                                onclick="deleteRecord('programs', {{ $pr->id }}, 'tab-curriculum')">Hapus</button>
+                                        </td>
+                                    </tr>
                                     @endforeach
                                 </tbody>
                             </table>
@@ -630,18 +630,18 @@
                                     </thead>
                                     <tbody>
                                         @foreach ($subjects as $sb)
-                                            <tr>
-                                                <td><strong>{{ $sb->name }}</strong></td>
-                                                <td><span class="badge-tag">{{ $sb->program_name }}</span></td>
-                                                <td>{{ $sb->passing_grade }}</td>
-                                                <td>
-                                                    <button type="button" class="btn-xs btn-edit"
-                                                        onclick='openSubjectModal(@json($sb))'>✏️
-                                                        Edit</button>
-                                                    <button type="button" class="btn-xs btn-danger"
-                                                        onclick="deleteRecord('subjects', {{ $sb->id }}, 'tab-curriculum')">Hapus</button>
-                                                </td>
-                                            </tr>
+                                        <tr>
+                                            <td><strong>{{ $sb->name }}</strong></td>
+                                            <td><span class="badge-tag">{{ $sb->program_name }}</span></td>
+                                            <td>{{ $sb->passing_grade }}</td>
+                                            <td>
+                                                <button type="button" class="btn-xs btn-edit"
+                                                    onclick='openSubjectModal(@json($sb))'>✏️
+                                                    Edit</button>
+                                                <button type="button" class="btn-xs btn-danger"
+                                                    onclick="deleteRecord('subjects', {{ $sb->id }}, 'tab-curriculum')">Hapus</button>
+                                            </td>
+                                        </tr>
                                         @endforeach
                                     </tbody>
                                 </table>
@@ -665,18 +665,18 @@
                                     </thead>
                                     <tbody>
                                         @foreach ($topics as $tp)
-                                            <tr>
-                                                <td><strong>{{ $tp->name }}</strong><br><small
-                                                        class="text-muted">{{ $tp->description }}</small></td>
-                                                <td><span class="badge-tag">{{ $tp->subject_name }}</span></td>
-                                                <td>
-                                                    <button type="button" class="btn-xs btn-edit"
-                                                        onclick='openTopicModal(@json($tp))'>✏️
-                                                        Edit</button>
-                                                    <button type="button" class="btn-xs btn-danger"
-                                                        onclick="deleteRecord('topics', {{ $tp->id }}, 'tab-curriculum')">Hapus</button>
-                                                </td>
-                                            </tr>
+                                        <tr>
+                                            <td><strong>{{ $tp->name }}</strong><br><small
+                                                    class="text-muted">{{ $tp->description }}</small></td>
+                                            <td><span class="badge-tag">{{ $tp->subject_name }}</span></td>
+                                            <td>
+                                                <button type="button" class="btn-xs btn-edit"
+                                                    onclick='openTopicModal(@json($tp))'>✏️
+                                                    Edit</button>
+                                                <button type="button" class="btn-xs btn-danger"
+                                                    onclick="deleteRecord('topics', {{ $tp->id }}, 'tab-curriculum')">Hapus</button>
+                                            </td>
+                                        </tr>
                                         @endforeach
                                     </tbody>
                                 </table>
@@ -712,26 +712,26 @@
                                 </thead>
                                 <tbody>
                                     @foreach ($siteSettings as $st)
-                                        <tr>
-                                            <td><span class="badge-tag">{{ $st->group }}</span></td>
-                                            <td><strong>{{ $st->label }}</strong><br><small
-                                                    class="text-muted">{{ $st->key }}</small></td>
-                                            <td>{{ Str::limit($st->value, 85) }}</td>
-                                            <td>
-                                                <button type="button"
-                                                    class="toggle-btn {{ $st->is_displayed ? 'on' : 'off' }}"
-                                                    onclick="toggleStatus('site_settings', {{ $st->id }}, 'is_displayed', 'tab-cms')">
-                                                    {{ $st->is_displayed ? 'Tampil' : 'Sembunyi' }}
-                                                </button>
-                                            </td>
-                                            <td>
-                                                <button type="button" class="btn-xs btn-edit"
-                                                    onclick='openSettingModal(@json($st))'>✏️
-                                                    Edit</button>
-                                                <button type="button" class="btn-xs btn-danger"
-                                                    onclick="deleteRecord('site_settings', {{ $st->id }}, 'tab-cms')">Hapus</button>
-                                            </td>
-                                        </tr>
+                                    <tr>
+                                        <td><span class="badge-tag">{{ $st->group }}</span></td>
+                                        <td><strong>{{ $st->label }}</strong><br><small
+                                                class="text-muted">{{ $st->key }}</small></td>
+                                        <td>{{ Str::limit($st->value, 85) }}</td>
+                                        <td>
+                                            <button type="button"
+                                                class="toggle-btn {{ $st->is_displayed ? 'on' : 'off' }}"
+                                                onclick="toggleStatus('site_settings', {{ $st->id }}, 'is_displayed', 'tab-cms')">
+                                                {{ $st->is_displayed ? 'Tampil' : 'Sembunyi' }}
+                                            </button>
+                                        </td>
+                                        <td>
+                                            <button type="button" class="btn-xs btn-edit"
+                                                onclick='openSettingModal(@json($st))'>✏️
+                                                Edit</button>
+                                            <button type="button" class="btn-xs btn-danger"
+                                                onclick="deleteRecord('site_settings', {{ $st->id }}, 'tab-cms')">Hapus</button>
+                                        </td>
+                                    </tr>
                                     @endforeach
                                 </tbody>
                             </table>
@@ -757,25 +757,25 @@
                                     </thead>
                                     <tbody>
                                         @foreach ($landingMenus as $mn)
-                                            <tr>
-                                                <td><strong>{{ $mn->title }}</strong><br><small>{{ $mn->url }}</small>
-                                                </td>
-                                                <td><span class="badge-tag">{{ $mn->location }}</span></td>
-                                                <td>
-                                                    <button type="button"
-                                                        class="toggle-btn {{ $mn->is_displayed ? 'on' : 'off' }}"
-                                                        onclick="toggleStatus('landing_menus', {{ $mn->id }}, 'is_displayed', 'tab-cms')">
-                                                        {{ $mn->is_displayed ? 'Tampil' : 'Sembunyi' }}
-                                                    </button>
-                                                </td>
-                                                <td>
-                                                    <button type="button" class="btn-xs btn-edit"
-                                                        onclick='openMenuModal(@json($mn))'>✏️
-                                                        Edit</button>
-                                                    <button type="button" class="btn-xs btn-danger"
-                                                        onclick="deleteRecord('landing_menus', {{ $mn->id }}, 'tab-cms')">Hapus</button>
-                                                </td>
-                                            </tr>
+                                        <tr>
+                                            <td><strong>{{ $mn->title }}</strong><br><small>{{ $mn->url }}</small>
+                                            </td>
+                                            <td><span class="badge-tag">{{ $mn->location }}</span></td>
+                                            <td>
+                                                <button type="button"
+                                                    class="toggle-btn {{ $mn->is_displayed ? 'on' : 'off' }}"
+                                                    onclick="toggleStatus('landing_menus', {{ $mn->id }}, 'is_displayed', 'tab-cms')">
+                                                    {{ $mn->is_displayed ? 'Tampil' : 'Sembunyi' }}
+                                                </button>
+                                            </td>
+                                            <td>
+                                                <button type="button" class="btn-xs btn-edit"
+                                                    onclick='openMenuModal(@json($mn))'>✏️
+                                                    Edit</button>
+                                                <button type="button" class="btn-xs btn-danger"
+                                                    onclick="deleteRecord('landing_menus', {{ $mn->id }}, 'tab-cms')">Hapus</button>
+                                            </td>
+                                        </tr>
                                         @endforeach
                                     </tbody>
                                 </table>
@@ -799,25 +799,25 @@
                                     </thead>
                                     <tbody>
                                         @foreach ($landingFeatures as $ft)
-                                            <tr>
-                                                <td><strong>{{ $ft->title }}</strong><br><small
-                                                        class="text-muted">{{ Str::limit($ft->description, 55) }}</small>
-                                                </td>
-                                                <td>
-                                                    <button type="button"
-                                                        class="toggle-btn {{ $ft->is_displayed ? 'on' : 'off' }}"
-                                                        onclick="toggleStatus('landing_features', {{ $ft->id }}, 'is_displayed', 'tab-cms')">
-                                                        {{ $ft->is_displayed ? 'Tampil' : 'Sembunyi' }}
-                                                    </button>
-                                                </td>
-                                                <td>
-                                                    <button type="button" class="btn-xs btn-edit"
-                                                        onclick='openFeatureModal(@json($ft))'>✏️
-                                                        Edit</button>
-                                                    <button type="button" class="btn-xs btn-danger"
-                                                        onclick="deleteRecord('landing_features', {{ $ft->id }}, 'tab-cms')">Hapus</button>
-                                                </td>
-                                            </tr>
+                                        <tr>
+                                            <td><strong>{{ $ft->title }}</strong><br><small
+                                                    class="text-muted">{{ Str::limit($ft->description, 55) }}</small>
+                                            </td>
+                                            <td>
+                                                <button type="button"
+                                                    class="toggle-btn {{ $ft->is_displayed ? 'on' : 'off' }}"
+                                                    onclick="toggleStatus('landing_features', {{ $ft->id }}, 'is_displayed', 'tab-cms')">
+                                                    {{ $ft->is_displayed ? 'Tampil' : 'Sembunyi' }}
+                                                </button>
+                                            </td>
+                                            <td>
+                                                <button type="button" class="btn-xs btn-edit"
+                                                    onclick='openFeatureModal(@json($ft))'>✏️
+                                                    Edit</button>
+                                                <button type="button" class="btn-xs btn-danger"
+                                                    onclick="deleteRecord('landing_features', {{ $ft->id }}, 'tab-cms')">Hapus</button>
+                                            </td>
+                                        </tr>
                                         @endforeach
                                     </tbody>
                                 </table>
@@ -849,23 +849,23 @@
                                 </thead>
                                 <tbody>
                                     @foreach ($users as $u)
-                                        <tr>
-                                            <td><strong>#{{ $u->id }} - {{ $u->name }}</strong></td>
-                                            <td>{{ $u->email }}</td>
-                                            <td><span
-                                                    class="badge-tag role-{{ $u->role }}">{{ strtoupper($u->role) }}</span>
-                                            </td>
-                                            <td>{{ $u->google_id ? '✅ Terhubung' : '—' }}</td>
-                                            <td>
-                                                <button type="button" class="btn-xs btn-edit"
-                                                    onclick='openUserModal(@json($u))'>✏️
-                                                    Edit</button>
-                                                @if ($u->id !== $admin->id)
-                                                    <button type="button" class="btn-xs btn-danger"
-                                                        onclick="deleteRecord('users', {{ $u->id }}, 'tab-users')">Hapus</button>
-                                                @endif
-                                            </td>
-                                        </tr>
+                                    <tr>
+                                        <td><strong>#{{ $u->id }} - {{ $u->name }}</strong></td>
+                                        <td>{{ $u->email }}</td>
+                                        <td><span
+                                                class="badge-tag role-{{ $u->role }}">{{ strtoupper($u->role) }}</span>
+                                        </td>
+                                        <td>{{ $u->google_id ? '✅ Terhubung' : '—' }}</td>
+                                        <td>
+                                            <button type="button" class="btn-xs btn-edit"
+                                                onclick='openUserModal(@json($u))'>✏️
+                                                Edit</button>
+                                            @if ($u->id !== $admin->id)
+                                            <button type="button" class="btn-xs btn-danger"
+                                                onclick="deleteRecord('users', {{ $u->id }}, 'tab-users')">Hapus</button>
+                                            @endif
+                                        </td>
+                                    </tr>
                                     @endforeach
                                 </tbody>
                             </table>
@@ -896,21 +896,21 @@
                                     </thead>
                                     <tbody>
                                         @foreach ($transactions as $tx)
-                                            <tr>
-                                                <td><strong>{{ $tx->invoice_code }}</strong><br><small>{{ $tx->user_name }}</small>
-                                                </td>
-                                                <td>{{ Str::limit($tx->package_name, 28) }}</td>
-                                                <td>Rp {{ number_format($tx->total_amount, 0, ',', '.') }}<br><span
-                                                        class="badge-tag">{{ strtoupper($tx->payment_status) }}</span>
-                                                </td>
-                                                <td>
-                                                    <button type="button" class="btn-xs btn-edit"
-                                                        onclick='openTrxModal(@json($tx))'>✏️
-                                                        Edit</button>
-                                                    <button type="button" class="btn-xs btn-danger"
-                                                        onclick="deleteRecord('transactions', {{ $tx->id }}, 'tab-transactions')">Hapus</button>
-                                                </td>
-                                            </tr>
+                                        <tr>
+                                            <td><strong>{{ $tx->invoice_code }}</strong><br><small>{{ $tx->user_name }}</small>
+                                            </td>
+                                            <td>{{ Str::limit($tx->package_name, 28) }}</td>
+                                            <td>Rp {{ number_format($tx->total_amount, 0, ',', '.') }}<br><span
+                                                    class="badge-tag">{{ strtoupper($tx->payment_status) }}</span>
+                                            </td>
+                                            <td>
+                                                <button type="button" class="btn-xs btn-edit"
+                                                    onclick='openTrxModal(@json($tx))'>✏️
+                                                    Edit</button>
+                                                <button type="button" class="btn-xs btn-danger"
+                                                    onclick="deleteRecord('transactions', {{ $tx->id }}, 'tab-transactions')">Hapus</button>
+                                            </td>
+                                        </tr>
                                         @endforeach
                                     </tbody>
                                 </table>
@@ -935,18 +935,18 @@
                                     </thead>
                                     <tbody>
                                         @foreach ($userAccesses as $ua)
-                                            <tr>
-                                                <td><strong>{{ $ua->user_name }}</strong></td>
-                                                <td>{{ Str::limit($ua->package_name, 30) }}</td>
-                                                <td>{{ \Carbon\Carbon::parse($ua->expires_at)->format('d M Y') }}</td>
-                                                <td>
-                                                    <button type="button" class="btn-xs btn-edit"
-                                                        onclick='openAccessModal(@json($ua))'>✏️
-                                                        Edit</button>
-                                                    <button type="button" class="btn-xs btn-danger"
-                                                        onclick="deleteRecord('user_accesses', {{ $ua->id }}, 'tab-transactions')">Cabut</button>
-                                                </td>
-                                            </tr>
+                                        <tr>
+                                            <td><strong>{{ $ua->user_name }}</strong></td>
+                                            <td>{{ Str::limit($ua->package_name, 30) }}</td>
+                                            <td>{{ \Carbon\Carbon::parse($ua->expires_at)->format('d M Y') }}</td>
+                                            <td>
+                                                <button type="button" class="btn-xs btn-edit"
+                                                    onclick='openAccessModal(@json($ua))'>✏️
+                                                    Edit</button>
+                                                <button type="button" class="btn-xs btn-danger"
+                                                    onclick="deleteRecord('user_accesses', {{ $ua->id }}, 'tab-transactions')">Cabut</button>
+                                            </td>
+                                        </tr>
                                         @endforeach
                                     </tbody>
                                 </table>
@@ -979,21 +979,21 @@
                                 </thead>
                                 <tbody>
                                     @foreach ($diagnostics as $dg)
-                                        <tr>
-                                            <td><strong>{{ $dg->user_name }}</strong></td>
-                                            <td>{{ $dg->topic_name }}</td>
-                                            <td>{{ $dg->total_correct }} / {{ $dg->total_answered }}</td>
-                                            <td>{{ $dg->accuracy_percentage }}% ({{ $dg->avg_time_seconds }}
-                                                dtk/soal)</td>
-                                            <td><span class="badge-tag">{{ $dg->status_label }}</span></td>
-                                            <td>
-                                                <button type="button" class="btn-xs btn-edit"
-                                                    onclick='openDiagModal(@json($dg))'>✏️
-                                                    Edit</button>
-                                                <button type="button" class="btn-xs btn-danger"
-                                                    onclick="deleteRecord('competency_diagnostics', {{ $dg->id }}, 'tab-results')">Hapus</button>
-                                            </td>
-                                        </tr>
+                                    <tr>
+                                        <td><strong>{{ $dg->user_name }}</strong></td>
+                                        <td>{{ $dg->topic_name }}</td>
+                                        <td>{{ $dg->total_correct }} / {{ $dg->total_answered }}</td>
+                                        <td>{{ $dg->accuracy_percentage }}% ({{ $dg->avg_time_seconds }}
+                                            dtk/soal)</td>
+                                        <td><span class="badge-tag">{{ $dg->status_label }}</span></td>
+                                        <td>
+                                            <button type="button" class="btn-xs btn-edit"
+                                                onclick='openDiagModal(@json($dg))'>✏️
+                                                Edit</button>
+                                            <button type="button" class="btn-xs btn-danger"
+                                                onclick="deleteRecord('competency_diagnostics', {{ $dg->id }}, 'tab-results')">Hapus</button>
+                                        </td>
+                                    </tr>
                                     @endforeach
                                 </tbody>
                             </table>
@@ -1029,7 +1029,7 @@
                         <label class="adm-label">Program Kurikulum</label>
                         <select name="program_id" id="to_prog" class="adm-input">
                             @foreach ($programs as $pr)
-                                <option value="{{ $pr->id }}">{{ $pr->name }}</option>
+                            <option value="{{ $pr->id }}">{{ $pr->name }}</option>
                             @endforeach
                         </select>
                     </div>
@@ -1094,8 +1094,9 @@
                         <label class="adm-label">Master Paket Tryout</label>
                         <select name="tryout_id" id="q_tryout" class="adm-input" required>
                             @foreach ($tryouts as $t)
-                                <option value="{{ $t->id }}">[{{ $t->code }}]
-                                    {{ Str::limit($t->title, 32) }}</option>
+                            <option value="{{ $t->id }}">[{{ $t->code }}]
+                                {{ Str::limit($t->title, 32) }}
+                            </option>
                             @endforeach
                         </select>
                     </div>
@@ -1108,7 +1109,7 @@
                         <label class="adm-label">Sub-Topik Kompetensi</label>
                         <select name="topic_id" id="q_topic" class="adm-input" required>
                             @foreach ($topics as $tp)
-                                <option value="{{ $tp->id }}">{{ $tp->name }}</option>
+                            <option value="{{ $tp->id }}">{{ $tp->name }}</option>
                             @endforeach
                         </select>
                     </div>
@@ -1155,22 +1156,22 @@
                         Keduanya):</label>
                     <div class="options-grid-5">
                         @foreach (['A', 'B', 'C', 'D', 'E'] as $lbl)
-                            <div class="opt-item">
-                                <div class="flex-between">
-                                    <span class="opt-badge">Opsi {{ $lbl }}</span>
-                                    <small class="text-muted">Bobot Poin:</small>
-                                </div>
-                                <input type="text" name="option_text_{{ $lbl }}"
-                                    id="opt_text_{{ $lbl }}" class="adm-input"
-                                    placeholder="Teks Jawaban {{ $lbl }}">
-                                <input type="url" name="option_image_{{ $lbl }}"
-                                    id="opt_img_{{ $lbl }}" class="adm-input"
-                                    placeholder="🖼️ Link Gambar Opsi {{ $lbl }} (Opsional)">
-                                <input type="number" name="score_weight_{{ $lbl }}"
-                                    id="opt_weight_{{ $lbl }}" class="adm-input opt-score"
-                                    value="{{ $lbl === 'B' ? 5 : 0 }}"
-                                    title="Bobot Skor Opsi {{ $lbl }}">
+                        <div class="opt-item">
+                            <div class="flex-between">
+                                <span class="opt-badge">Opsi {{ $lbl }}</span>
+                                <small class="text-muted">Bobot Poin:</small>
                             </div>
+                            <input type="text" name="option_text_{{ $lbl }}"
+                                id="opt_text_{{ $lbl }}" class="adm-input"
+                                placeholder="Teks Jawaban {{ $lbl }}">
+                            <input type="url" name="option_image_{{ $lbl }}"
+                                id="opt_img_{{ $lbl }}" class="adm-input"
+                                placeholder="🖼️ Link Gambar Opsi {{ $lbl }} (Opsional)">
+                            <input type="number" name="score_weight_{{ $lbl }}"
+                                id="opt_weight_{{ $lbl }}" class="adm-input opt-score"
+                                value="{{ $lbl === 'B' ? 5 : 0 }}"
+                                title="Bobot Skor Opsi {{ $lbl }}">
+                        </div>
                         @endforeach
                     </div>
                 </div>
@@ -1188,117 +1189,80 @@
         </div>
     </div>
 
-    <!-- 3. MODAL PAKET BELAJAR & ISI BUNDLING (XL MODAL) -->
+    <!-- MODAL PAKET PENJUALAN & BUNDLING -->
     <div class="adm-modal" id="modal-package">
-        <div class="adm-modal-content modal-xl">
+        <div class="adm-modal-content">
             <div class="adm-modal-header">
-                <h3 id="modal-package-title">Rakit Paket Belajar & Pilih Isi Bundling</h3>
-                <button type="button" class="adm-modal-close" onclick="closeModal('modal-package')">&times;</button>
+                <h3 id="modal-package-title">Buat Paket Belajar & Bundling Baru</h3>
+                <button type="button" class="adm-modal-close" onclick="closeModal('modal-package')">×</button>
             </div>
-            <form action="{{ route('admin.packages.save') }}" method="POST" class="adm-modal-body">
+
+            <form action="{{ route('admin.packages.save') }}" method="POST" enctype="multipart/form-data" class="adm-modal-body">
                 @csrf
                 <input type="hidden" name="id" id="pkg_id">
-                <div class="form-grid-4">
-                    <div>
-                        <label class="adm-label">Nama Paket</label>
-                        <input type="text" name="name" id="pkg_name" class="adm-input" required>
-                    </div>
-                    <div>
-                        <label class="adm-label">Kategori Paket</label>
-                        <select name="type" id="pkg_type" class="adm-input">
-                            <option value="bundling">Bundling (Tryout + Video)</option>
-                            <option value="to_full">Paket Tryout Full</option>
-                            <option value="to_materi">Mini TO Per Materi</option>
-                            <option value="private_1on1">Private Mentoring 1-on-1</option>
-                        </select>
-                    </div>
-                    <div>
-                        <label class="adm-label">Badge Label Atas</label>
-                        <input type="text" name="badge_text" id="pkg_badge" class="adm-input"
-                            placeholder="Terlaris • Bundling">
-                    </div>
-                    <div>
-                        <label class="adm-label">Harga Asli & Diskon (Rp)</label>
-                        <div class="flex-gap">
-                            <input type="number" name="price" id="pkg_price" class="adm-input"
-                                placeholder="Normal" required>
-                            <input type="number" name="discount_price" id="pkg_disc" class="adm-input"
-                                placeholder="Diskon">
-                        </div>
-                    </div>
-                </div>
 
-                <div class="bundling-selector-grid mt-10">
-                    <div class="bs-box">
-                        <div class="bs-head">🗂️ Pilih Paket Tryout:</div>
-                        <div class="bs-list">
-                            @foreach ($tryouts as $to)
-                                <label class="bs-item">
-                                    <input type="checkbox" name="tryout_ids[]" value="{{ $to->id }}"
-                                        class="chk-pkg-tryout">
-                                    <span><strong>[{{ $to->code }}]</strong> {{ $to->title }}
-                                        ({{ $to->actual_questions_count }} Soal)</span>
-                                </label>
-                            @endforeach
-                        </div>
+                <div class="form-grid-2">
+                    <div>
+                        <label class="adm-label">Nama Paket Belajar</label>
+                        <input type="text" name="name" id="pkg_name" class="adm-input" placeholder="Paket Bundling SKD..." required>
                     </div>
-                    <div class="bs-box">
-                        <div class="bs-head">🎬 Pilih Video Materi / Modul:</div>
-                        <div class="bs-list">
-                            @foreach ($materials as $mat)
-                                <label class="bs-item">
-                                    <input type="checkbox" name="material_ids[]" value="{{ $mat->id }}"
-                                        class="chk-pkg-material">
-                                    <span><strong>[{{ strtoupper($mat->type) }}]</strong> {{ $mat->title }}</span>
-                                </label>
-                            @endforeach
-                        </div>
-                    </div>
-                    <div class="bs-box">
-                        <div class="bs-head">👨‍🏫 Sesi Private 1-on-1:</div>
-                        <div class="bs-list">
-                            <label class="adm-label">Jumlah Sesi Live 1-on-1:</label>
-                            <input type="number" name="private_sessions_count" id="pkg_priv_count"
-                                class="adm-input mb-8" value="0" min="0">
-                            @foreach ($users->where('role', 'instructor') as $mentor)
-                                <label class="bs-item">
-                                    <input type="checkbox" name="mentor_ids[]" value="{{ $mentor->id }}"
-                                        class="chk-pkg-mentor">
-                                    <span>Mentor: <strong>{{ $mentor->name }}</strong></span>
-                                </label>
-                            @endforeach
-                        </div>
+                    <div>
+                        <label class="adm-label">Kategori / Tipe Paket</label>
+                        <select name="type" id="pkg_type" class="adm-input">
+                            <option value="bundling">🔥 Bundling (TO + Video)</option>
+                            <option value="to_full">Tryout Full SKD/STIS</option>
+                            <option value="to_materi">TO Spesialisasi Materi</option>
+                            <option value="private_1on1">Private 1-on-1 & Custom</option>
+                        </select>
                     </div>
                 </div>
 
                 <div class="form-grid-2 mt-10">
                     <div>
-                        <label class="adm-label">Deskripsi Singkat Paket</label>
-                        <textarea name="short_description" id="pkg_desc" rows="3" class="adm-input"></textarea>
-                        <div class="flex-gap mt-6">
-                            <input type="number" name="active_period_days" id="pkg_days" class="adm-input"
-                                value="365" placeholder="Masa Aktif (Hari)">
-                            <input type="number" name="sort_order" id="pkg_sort" class="adm-input" value="1"
-                                placeholder="Urutan">
-                        </div>
+                        <label class="adm-label">Thumbnail / Gambar Banner Paket</label>
+                        <input type="file" name="thumbnail" id="pkg_thumbnail" class="adm-input" accept="image/*">
                     </div>
                     <div>
-                        <label class="adm-label">Checklist Fitur Etalase (1 Baris = 1 Fitur)</label>
-                        <textarea name="features_text" id="pkg_features" rows="4" class="adm-input"></textarea>
+                        <label class="adm-label">Masa Aktif Paket (Hari)</label>
+                        <input type="number" name="active_period_days" id="pkg_active_days" class="adm-input" placeholder="365" value="365">
                     </div>
                 </div>
 
-                <div class="adm-modal-footer">
-                    <div class="flex-gap">
-                        <label class="chk-label"><input type="checkbox" name="show_on_homepage" id="pkg_home"
-                                checked> Tampil di Beranda</label>
-                        <label class="chk-label"><input type="checkbox" name="is_featured" id="pkg_feat"> Highlight
-                            Terlaris</label>
+                <div class="form-grid-3 mt-10">
+                    <div>
+                        <label class="adm-label">Teks Badge (Label)</label>
+                        <input type="text" name="badge_text" id="pkg_badge" class="adm-input" placeholder="Terlaris • Bundling Lengkap">
                     </div>
+                    <div>
+                        <label class="adm-label">Harga Normal (Rp)</label>
+                        <input type="number" name="price" id="pkg_price" class="adm-input" placeholder="250000" required>
+                    </div>
+                    <div>
+                        <label class="adm-label">Harga Diskon (Rp)</label>
+                        <input type="number" name="discount_price" id="pkg_disc" class="adm-input" placeholder="149000">
+                    </div>
+                </div>
+
+                <div class="mt-10">
+                    <label class="adm-label">Deskripsi Singkat</label>
+                    <textarea name="short_description" id="pkg_desc" rows="2" class="adm-input"></textarea>
+                </div>
+
+                <div class="mt-10">
+                    <label class="adm-label">Daftar Fitur (Satu baris per fitur)</label>
+                    <textarea name="features_text" id="pkg_features" rows="4" class="adm-input"></textarea>
+                </div>
+
+                <div class="adm-modal-footer mt-10">
+                    <label class="chk-label">
+                        <input type="checkbox" name="show_on_homepage" id="pkg_homepage" value="1" checked> Tampilkan di Beranda
+                    </label>
+                    <label class="chk-label">
+                        <input type="checkbox" name="is_featured" id="pkg_featured" value="1"> Rekomendasi Utama
+                    </label>
                     <div class="flex-gap">
-                        <button type="button" class="btn-outline"
-                            onclick="closeModal('modal-package')">Batal</button>
-                        <button type="submit" class="btn-primary">💾 Simpan Paket Bundling</button>
+                        <button type="button" class="btn-outline" onclick="closeModal('modal-package')">Batal</button>
+                        <button type="submit" class="btn-primary">💾 Simpan Paket</button>
                     </div>
                 </div>
             </form>
@@ -1321,7 +1285,7 @@
                         <label class="adm-label">Sub-Topik</label>
                         <select name="topic_id" id="mat_topic" class="adm-input" required>
                             @foreach ($topics as $t)
-                                <option value="{{ $t->id }}">{{ $t->name }}</option>
+                            <option value="{{ $t->id }}">{{ $t->name }}</option>
                             @endforeach
                         </select>
                     </div>
@@ -1329,7 +1293,7 @@
                         <label class="adm-label">Pengajar / Mentor</label>
                         <select name="instructor_id" id="mat_inst" class="adm-input">
                             @foreach ($users->whereIn('role', ['instructor', 'admin']) as $inst)
-                                <option value="{{ $inst->id }}">{{ $inst->name }}</option>
+                            <option value="{{ $inst->id }}">{{ $inst->name }}</option>
                             @endforeach
                         </select>
                     </div>
@@ -1415,7 +1379,7 @@
                 <label class="adm-label">Program</label>
                 <select name="program_id" id="subj_prog" class="adm-input">
                     @foreach ($programs as $p)
-                        <option value="{{ $p->id }}">{{ $p->name }}</option>
+                    <option value="{{ $p->id }}">{{ $p->name }}</option>
                     @endforeach
                 </select>
                 <div class="mt-10">
@@ -1448,7 +1412,7 @@
                 <label class="adm-label">Mata Uji</label>
                 <select name="subject_id" id="top_subj" class="adm-input">
                     @foreach ($subjects as $s)
-                        <option value="{{ $s->id }}">{{ $s->name }}</option>
+                    <option value="{{ $s->id }}">{{ $s->name }}</option>
                     @endforeach
                 </select>
                 <div class="mt-10">
@@ -1642,14 +1606,14 @@
                 <label class="adm-label">Pilih Siswa</label>
                 <select name="user_id" id="trx_user" class="adm-input">
                     @foreach ($users as $u)
-                        <option value="{{ $u->id }}">{{ $u->name }} ({{ $u->email }})</option>
+                    <option value="{{ $u->id }}">{{ $u->name }} ({{ $u->email }})</option>
                     @endforeach
                 </select>
                 <div class="mt-10">
                     <label class="adm-label">Paket Belajar</label>
                     <select name="package_id" id="trx_pkg" class="adm-input">
                         @foreach ($packages as $p)
-                            <option value="{{ $p->id }}">{{ $p->name }}</option>
+                        <option value="{{ $p->id }}">{{ $p->name }}</option>
                         @endforeach
                     </select>
                 </div>
@@ -1688,14 +1652,14 @@
                 <label class="adm-label">Siswa</label>
                 <select name="user_id" id="acc_user" class="adm-input">
                     @foreach ($users as $u)
-                        <option value="{{ $u->id }}">{{ $u->name }}</option>
+                    <option value="{{ $u->id }}">{{ $u->name }}</option>
                     @endforeach
                 </select>
                 <div class="mt-10">
                     <label class="adm-label">Paket</label>
                     <select name="package_id" id="acc_pkg" class="adm-input">
                         @foreach ($packages as $p)
-                            <option value="{{ $p->id }}">{{ $p->name }}</option>
+                        <option value="{{ $p->id }}">{{ $p->name }}</option>
                         @endforeach
                     </select>
                 </div>
@@ -1726,7 +1690,7 @@
                         <label class="adm-label">Siswa</label>
                         <select name="user_id" id="diag_user" class="adm-input">
                             @foreach ($users as $u)
-                                <option value="{{ $u->id }}">{{ $u->name }}</option>
+                            <option value="{{ $u->id }}">{{ $u->name }}</option>
                             @endforeach
                         </select>
                     </div>
@@ -1734,7 +1698,7 @@
                         <label class="adm-label">Sub-Topik</label>
                         <select name="topic_id" id="diag_topic" class="adm-input">
                             @foreach ($topics as $tp)
-                                <option value="{{ $tp->id }}">{{ $tp->name }}</option>
+                            <option value="{{ $tp->id }}">{{ $tp->name }}</option>
                             @endforeach
                         </select>
                     </div>

@@ -902,21 +902,33 @@ section {
 
 .packages-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(275px, 1fr));
+    /* Membuat grid 3 kolom tetap dengan lebar sama pada layar desktop */
+    grid-template-columns: repeat(3, 1fr); 
     gap: 24px;
+    align-items: stretch;
 }
 
 .package-card {
     background: var(--bg-surface);
     border: 1.5px solid var(--border-color);
     border-radius: var(--radius-lg);
-    padding: 28px 24px;
+    padding: 0 0 24px 0;        /* Mengubah padding agar thumbnail bisa menempel sempurna ke atas */
     display: flex;
     flex-direction: column;
     justify-content: space-between;
     position: relative;
+    overflow: hidden;           /* Memastikan isi kartu tidak melenceng keluar dari radius */
     transition: all 0.3s ease;
     box-shadow: var(--shadow-sm);
+}
+
+/* Penyesuaian Padding untuk bagian konten di dalam paket setelah thumbnail */
+.pkg-header,
+.pkg-pricing,
+.pkg-features,
+.pkg-footer {
+    padding-left: 24px;
+    padding-right: 24px;
 }
 
 .package-card:hover {
@@ -931,15 +943,24 @@ section {
 
 .popular-ribbon {
     position: absolute;
-    top: -13px;
-    right: 20px;
+    /* Posisikan 180px dari atas (sesuai tinggi .pkg-thumbnail-wrap) 
+       lalu kurangi separuh tinggi badge (-14px) agar berada persis di perbatasan */
+    top: calc(180px - 14px);
+    right: 16px;
+    left: auto;
+    
+    z-index: 20; /* Memastikan melayang paling atas di atas gambar dan konten */
+    
     background: linear-gradient(135deg, var(--accent-amber), #EA580C);
-    color: white;
-    font-size: 0.7rem;
+    color: #ffffff;
+    font-size: 0.75rem;
     font-weight: 800;
-    padding: 5px 12px;
+    padding: 6px 16px;
     border-radius: 50px;
-    box-shadow: 0 4px 10px rgba(245, 158, 11, 0.3);
+    box-shadow: 0 4px 12px rgba(245, 158, 11, 0.4);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    pointer-events: none; /* Mencegah mengganggu hover/klik pada kartu */
 }
 
 .pkg-type-badge {
@@ -1053,6 +1074,19 @@ section {
 .btn-outline:hover {
     background: var(--primary);
     color: white;
+}
+
+/* Penyesuaian Responsif untuk Layar Tablet & HP */
+@media (max-width: 992px) {
+    .packages-grid {
+        grid-template-columns: repeat(2, 1fr); /* 2 Kolom di Tablet */
+    }
+}
+
+@media (max-width: 768px) {
+    .packages-grid {
+        grid-template-columns: 1fr; /* 1 Kolom Penuh di HP */
+    }
 }
 
 /* ==========================================================================
@@ -1693,8 +1727,35 @@ section {
     color: var(--text-muted);
 }
 
+
 @media (max-width: 480px) {
     .modal-box {
         padding: 24px 18px;
     }
+}
+
+/* Styling Thumbnail Paket */
+.pkg-thumbnail-wrap {
+    position: relative;
+    width: 100%;
+    height: 180px;
+    overflow: hidden;
+    line-height: 0;             /* PENTING: Menghilangkan spasi/jarak putih bawah gambar */
+    font-size: 0;               /* PENTING: Menghilangkan font baseline spacing */
+    background-color: #F8FAFC;
+    border-top-left-radius: var(--radius-lg);
+    border-top-right-radius: var(--radius-lg);
+}
+
+.pkg-thumbnail-img {
+    display: block;             /* PENTING: Mengubah elemen img menjadi block */
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+    transition: transform 0.3s ease;
+}
+
+.package-card:hover .pkg-thumbnail-img {
+    transform: scale(1.05);     /* Efek zoom halus saat kartu di-hover */
 }

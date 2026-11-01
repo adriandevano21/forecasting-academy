@@ -245,4 +245,55 @@ document.addEventListener('DOMContentLoaded', () => {
     );
 
     document.querySelectorAll('.reveal-up').forEach((el) => observer.observe(el));
+
+    const detailModal = document.getElementById('package-detail-modal');
+    const closeBtn = document.getElementById('pkg-modal-close');
+    const openBtns = document.querySelectorAll('.open-detail-modal-btn');
+
+    openBtns.forEach(btn => {
+        btn.addEventListener('click', function () {
+            const name = this.getAttribute('data-name');
+            const badge = this.getAttribute('data-badge');
+            const desc = this.getAttribute('data-desc');
+            const price = this.getAttribute('data-price');
+            const period = this.getAttribute('data-period');
+            const features = JSON.parse(this.getAttribute('data-features') || '[]');
+
+            // Set data ke dalam elemen Modal
+            document.getElementById('modal-pkg-badge').textContent = '🎓 ' + badge;
+            document.getElementById('modal-pkg-title').textContent = name;
+            document.getElementById('modal-pkg-desc').textContent = desc;
+            document.getElementById('modal-pkg-price').textContent = price;
+            document.getElementById('modal-pkg-period').textContent = '• Masa Aktif ' + period + ' Hari';
+
+            // Render fitur paket
+            const featuresList = document.getElementById('modal-pkg-features-list');
+            featuresList.innerHTML = '';
+            features.forEach(feat => {
+                const li = document.createElement('li');
+                li.innerHTML = `
+                    <svg class="check-icon" viewBox="0 0 20 20" fill="currentColor">
+                        <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" />
+                    </svg>
+                    <span>${feat}</span>
+                `;
+                featuresList.appendChild(li);
+            });
+
+            // Tampilkan Modal
+            detailModal.classList.add('active');
+        });
+    });
+
+    if (closeBtn) {
+        closeBtn.addEventListener('click', function () {
+            detailModal.classList.remove('active');
+        });
+    }
+
+    window.addEventListener('click', function (e) {
+        if (e.target === detailModal) {
+            detailModal.classList.remove('active');
+        }
+    });
 });

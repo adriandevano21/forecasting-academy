@@ -135,31 +135,76 @@ function openQuestionModal(q = null, defaultTryoutId = null, nextNum = 1) {
 }
 
 // 3. Modal Paket Belajar & Isi Bundling
-function openPackageModal(pkg = null) {
-    document.getElementById('modal-package-title').textContent = pkg ? `✏️ Edit Paket & Bundling: ${pkg.name}` : '➕ Buat Paket Belajar & Bundling Baru';
-    document.getElementById('pkg_id').value = pkg ? pkg.id : '';
-    document.getElementById('pkg_name').value = pkg ? pkg.name : '';
-    document.getElementById('pkg_type').value = pkg ? pkg.type : 'bundling';
-    document.getElementById('pkg_badge').value = pkg ? (pkg.badge_text || '') : '';
-    document.getElementById('pkg_price').value = pkg ? pkg.price : '';
-    document.getElementById('pkg_disc').value = pkg ? (pkg.discount_price || '') : '';
-    document.getElementById('pkg_desc').value = pkg ? (pkg.short_description || '') : '';
-    document.getElementById('pkg_days').value = pkg ? pkg.active_period_days : 365;
-    document.getElementById('pkg_sort').value = pkg ? pkg.sort_order : 1;
-    document.getElementById('pkg_priv_count').value = pkg ? (pkg.private_sessions_count || 0) : 0;
-    document.getElementById('pkg_features').value = pkg ? (pkg.features_text || '') : '';
-    document.getElementById('pkg_home').checked = pkg ? !!pkg.show_on_homepage : true;
-    document.getElementById('pkg_feat').checked = pkg ? !!pkg.is_featured : false;
+/* ==========================================================================
+   FUNGSI PAKET BELAJAR & BUNDLING MODAL (TAMBAH BARU & EDIT)
+   ========================================================================== */
 
-    const tryoutIds = pkg ? (pkg.tryout_ids || []).map(Number) : [];
-    const matIds    = pkg ? (pkg.material_ids || []).map(Number) : [];
-    const mentorIds = pkg ? (pkg.mentor_ids || []).map(Number) : [];
+function openPackageModal(data = null) {
+    const title = document.getElementById('modal-package-title');
 
-    document.querySelectorAll('.chk-pkg-tryout').forEach(c => c.checked = tryoutIds.includes(Number(c.value)));
-    document.querySelectorAll('.chk-pkg-material').forEach(c => c.checked = matIds.includes(Number(c.value)));
-    document.querySelectorAll('.chk-pkg-mentor').forEach(c => c.checked = mentorIds.includes(Number(c.value)));
+    // Helper set nilai input
+    const setValue = (id, val) => {
+        const el = document.getElementById(id);
+        if (el) el.value = val;
+    };
+
+    const setChecked = (id, val) => {
+        const el = document.getElementById(id);
+        if (el) el.checked = Boolean(val);
+    };
+
+    // 1. Set Input Form Utama
+    setValue('pkg_id', data ? (data.id || '') : '');
+    setValue('pkg_name', data ? (data.name || '') : '');
+    setValue('pkg_type', data ? (data.type || 'bundling') : 'bundling');
+    setValue('pkg_badge', data ? (data.badge_text || '') : '');
+    setValue('pkg_price', data ? (data.price || '') : '');
+    setValue('pkg_disc', data ? (data.discount_price || '') : '');
+    setValue('pkg_active_days', data ? (data.active_period_days || 365) : 365);
+    setValue('pkg_desc', data ? (data.short_description || '') : '');
+    setValue('pkg_features', data ? (data.features_text || '') : '');
+
+    // Reset input file
+    const thumbInput = document.getElementById('pkg_thumbnail');
+    if (thumbInput) thumbInput.value = '';
+
+    // 2. Set Pratinjau Thumbnail (Jika ada)
+    const previewWrapper = document.getElementById('pkg_thumbnail_preview_wrapper');
+    const previewImg = document.getElementById('pkg_thumbnail_preview');
+    if (data && data.thumbnail && previewWrapper && previewImg) {
+        previewImg.src = `/storage/${data.thumbnail}`;
+        previewWrapper.style.display = 'block';
+    } else if (previewWrapper) {
+        previewWrapper.style.display = 'none';
+    }
+
+    // 3. Set Checkbox Boolean
+    setChecked('pkg_homepage', data ? data.show_on_homepage : 1);
+    setChecked('pkg_featured', data ? data.is_featured : 0);
+
+    // 4. Set Select Item Bundling
+    const setMultiSelect = (selectorName, selectedArray) => {
+        const checkboxes = document.querySelectorAll(`input[name="${selectorName}"]`);
+        checkboxes.forEach(chk => {
+            const val = parseInt(chk.value);
+            chk.checked = selectedArray ? selectedArray.includes(val) : false;
+        });
+    };
+
+    setMultiSelect('tryout_ids[]', data ? data.tryout_ids : []);
+    setMultiSelect('material_ids[]', data ? data.material_ids : []);
+    setMultiSelect('mentor_ids[]', data ? data.mentor_ids : []);
+
+    // 5. Judul & Buka Modal
+    if (title) {
+        title.textContent = data ? `✏️ Edit Paket Belajar: ${data.name}` : '➕ Buat Paket Belajar & Bundling Baru';
+    }
 
     openModal('modal-package');
+}
+
+function closeModal(modalId) {
+    document.getElementById(modalId).classList.remove('active');
 }
 
 // 4. Modal Video Materi

@@ -104,18 +104,22 @@ class AdminController extends Controller
         $userMap     = $users->keyBy('id');
 
         $packages = DB::table('packages')->orderBy('sort_order')->get()->map(function ($pkg) use ($allPackageItems, $tryoutMap, $materialMap, $userMap) {
+            // Decoding fitur JSON ke string (dipakai untuk diisikan kembali ke modal edit)
             $pkg->features_array = json_decode($pkg->features ?? '[]', true) ?: [];
             $pkg->features_text  = implode("\n", $pkg->features_array);
 
+            // Ambil ID item bundling (Tryout, Materi, Mentor)
             $items = $allPackageItems->get($pkg->id, collect());
             $pkg->tryout_ids   = $items->where('item_type', 'tryout')->pluck('item_id')->values()->toArray();
             $pkg->material_ids = $items->where('item_type', 'material')->pluck('item_id')->values()->toArray();
             $pkg->mentor_ids   = $items->where('item_type', 'private_1on1')->pluck('item_id')->values()->toArray();
 
+            // Mapping nama item bundling untuk tampilan tabel
             $pkg->bundled_tryouts   = collect($pkg->tryout_ids)->map(fn($id) => $tryoutMap[$id]->title ?? "Tryout #{$id}")->toArray();
             $pkg->bundled_materials = collect($pkg->material_ids)->map(fn($id) => $materialMap[$id]->title ?? "Materi #{$id}")->toArray();
             $pkg->bundled_mentors   = collect($pkg->mentor_ids)->map(fn($id) => $userMap[$id]->name ?? "Mentor #{$id}")->toArray();
 
+            // $pkg->thumbnail sudah otomatis tersedia di dalam object $pkg
             return $pkg;
         });
 
@@ -458,15 +462,31 @@ class AdminController extends Controller
             ->with('active_tab', 'tab-questions');
     }
 
-    // 5. Paket Penjualan & Isi Bundling
     public function savePackage(Request $request)
     {
         $this->authorizeAdmin();
+
+        // 1. Validasi Input Form
+        $request->validate([
+            'id'                     => 'nullable|integer|exists:packages,id',
+            'name'                   => 'required|string|max:255',
+            'type'                   => 'required|string|max:50',
+            'price'                  => 'required|numeric|min:0',
+            'discount_price'         => 'nullable|numeric|min:0',
+            'thumbnail'              => 'nullable|image|mimes:jpeg,png,jpg,webp|max:2048',
+            'short_description'      => 'nullable|string',
+            'features_text'          => 'nullable|string',
+            'private_sessions_count' => 'nullable|integer|min:0',
+            'active_period_days'     => 'nullable|integer|min:1',
+            'sort_order'             => 'nullable|integer|min:1',
+        ]);
+
+        // 2. Parsing Fitur dari Textarea (per baris)
         $featuresLines = array_values(array_filter(array_map('trim', explode("\n", $request->input('features_text', '')))));
 
+        // 3. Susun Data Utama Paket
         $data = [
             'name'                   => $request->name,
-            'slug'                   => Str::slug($request->name) . '-' . rand(10, 99),
             'type'                   => $request->type,
             'badge_text'             => $request->badge_text,
             'short_description'      => $request->short_description,
@@ -481,38 +501,79 @@ class AdminController extends Controller
             'updated_at'             => now(),
         ];
 
-        if ($request->filled('id')) {
-            $packageId = $request->id;
-            unset($data['slug']);
-            DB::table('packages')->where('id', $packageId)->update($data);
-            DB::table('package_items')->where('package_id', $packageId)->delete();
-        } else {
-            $data['created_at'] = now();
-            $packageId = DB::table('packages')->insertGetId($data);
+        // 4. Handling Upload Gambar Thumbnail Paket
+        if ($request->hasFile('thumbnail')) {
+            // Jika mode edit, hapus thumbnail lama dari storage jika ada
+            if ($request->filled('id')) {
+                $oldPackage = DB::table('packages')->where('id', $request->id)->first();
+                if ($oldPackage && !empty($oldPackage->thumbnail) && Storage::disk('public')->exists($oldPackage->thumbnail)) {
+                    Storage::disk('public')->delete($oldPackage->thumbnail);
+                }
+            }
+
+            // Simpan file baru ke storage/app/public/packages
+            $path = $request->file('thumbnail')->store('packages', 'public');
+            $data['thumbnail'] = $path;
         }
 
-        $now = now();
-        $itemsToInsert = [];
-        foreach ($request->input('tryout_ids', []) as $tid) {
-            $itemsToInsert[] = ['package_id' => $packageId, 'item_type' => 'tryout', 'item_id' => (int) $tid, 'custom_note' => null, 'created_at' => $now, 'updated_at' => $now];
-        }
-        foreach ($request->input('material_ids', []) as $mid) {
-            $itemsToInsert[] = ['package_id' => $packageId, 'item_type' => 'material', 'item_id' => (int) $mid, 'custom_note' => null, 'created_at' => $now, 'updated_at' => $now];
-        }
-        foreach ($request->input('mentor_ids', []) as $uid) {
-            $itemsToInsert[] = [
-                'package_id'  => $packageId,
-                'item_type'   => 'private_1on1',
-                'item_id'     => (int) $uid,
-                'custom_note' => $data['private_sessions_count'] . 'x Sesi Mentoring Private 1-on-1',
-                'created_at'  => $now,
-                'updated_at' => $now,
-            ];
-        }
+        // 5. Database Transaction (Insert / Update Packages & Sync Package Items)
+        DB::transaction(function () use ($request, $data, &$packageId) {
+            if ($request->filled('id')) {
+                $packageId = $request->id;
+                DB::table('packages')->where('id', $packageId)->update($data);
 
-        if (!empty($itemsToInsert)) {
-            DB::table('package_items')->insert($itemsToInsert);
-        }
+                // Hapus item bundel lama untuk disinkron ulang
+                DB::table('package_items')->where('package_id', $packageId)->delete();
+            } else {
+                $data['slug']       = Str::slug($request->name) . '-' . rand(10, 99);
+                $data['created_at'] = now();
+                $packageId          = DB::table('packages')->insertGetId($data);
+            }
+
+            // 6. Menyusun & Menyimpan Item Bundling Paket (Tryout, Material, Mentoring)
+            $now = now();
+            $itemsToInsert = [];
+
+            // Item Tryout
+            foreach ($request->input('tryout_ids', []) as $tid) {
+                $itemsToInsert[] = [
+                    'package_id'  => $packageId,
+                    'item_type'   => 'tryout',
+                    'item_id'     => (int) $tid,
+                    'custom_note' => null,
+                    'created_at'  => $now,
+                    'updated_at'  => $now,
+                ];
+            }
+
+            // Item Materi Belajar
+            foreach ($request->input('material_ids', []) as $mid) {
+                $itemsToInsert[] = [
+                    'package_id'  => $packageId,
+                    'item_type'   => 'material',
+                    'item_id'     => (int) $mid,
+                    'custom_note' => null,
+                    'created_at'  => $now,
+                    'updated_at'  => $now,
+                ];
+            }
+
+            // Item Mentoring Private 1-on-1
+            foreach ($request->input('mentor_ids', []) as $uid) {
+                $itemsToInsert[] = [
+                    'package_id'  => $packageId,
+                    'item_type'   => 'private_1on1',
+                    'item_id'     => (int) $uid,
+                    'custom_note' => $data['private_sessions_count'] . 'x Sesi Mentoring Private 1-on-1',
+                    'created_at'  => $now,
+                    'updated_at'  => $now,
+                ];
+            }
+
+            if (!empty($itemsToInsert)) {
+                DB::table('package_items')->insert($itemsToInsert);
+            }
+        });
 
         return back()->with('success', 'Paket Belajar & Isi Bundling berhasil disimpan!')->with('active_tab', 'tab-packages');
     }

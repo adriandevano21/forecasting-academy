@@ -1,0 +1,1007 @@
+/* ==========================================================================
+   MESIN CAT (COMPUTER ASSISTED TEST) - TEMA CERAH MODERN
+   Lokasi: public/dashboard/css/cat-exam.css
+   ========================================================================== */
+:root {
+    --bg-body: #F1F5F9;
+    --bg-surface: #FFFFFF;
+    --bg-soft: #F8FAFC;
+    --text-main: #0F172A;
+    --text-secondary: #334155;
+    --text-muted: #64748B;
+
+    /* Warna Cerah Utama */
+    --blue-primary: #2563EB;
+    --blue-sky: #0284C7;
+    --blue-btn: #2B82D8;        /* Warna biru cerah tombol Simpan & Lewatkan sesuai referensi */
+    --blue-btn-hover: #1D68B8;
+
+    /* Warna Status Nomor Soal & Skor (Hijau & Merah Cerah) */
+    --cat-green: #15803D;       /* Hijau kotak nomor terjawab */
+    --cat-green-bg: #22C55E;
+    --cat-red: #DC2626;         /* Merah kotak nomor belum dijawab */
+    --cat-red-tile: #E04F4F;    /* Merah cerah tile nomor soal sesuai gambar B */
+    --cat-amber: #F59E0B;
+
+    --timer-mint: #99F6E4;      /* Latar hijau mint cerah pada kotak timer 00:28:19 */
+    --timer-text: #064E3B;
+
+    --border-color: #CBD5E1;
+    --border-light: #E2E8F0;
+    --shadow-sm: 0 4px 12px rgba(15, 23, 42, 0.05);
+    --shadow-md: 0 12px 28px rgba(37, 99, 235, 0.1);
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+    background-color: var(--bg-body);
+    color: var(--text-main);
+    line-height: 1.5;
+    min-height: 100vh;
+}
+
+.txt-green { color: #16A34A !important; }
+.txt-red { color: #DC2626 !important; }
+
+/* ==========================================================================
+   TAHAP 1: HALAMAN BRIEFING / PENJELASAN TRYOUT
+   ========================================================================== */
+.briefing-wrapper {
+    min-height: 100vh;
+    padding: 28px 20px 60px;
+    background: radial-gradient(circle at top right, #E0F2FE 0%, #F1F5F9 55%, #EFF6FF 100%);
+}
+
+.briefing-container {
+    max-width: 1040px;
+    margin: 0 auto;
+}
+
+.briefing-topbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 12px;
+    margin-bottom: 20px;
+}
+
+.btn-back-dash {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    text-decoration: none;
+    background: var(--bg-surface);
+    color: var(--text-secondary);
+    font-weight: 700;
+    font-size: 0.88rem;
+    padding: 10px 16px;
+    border-radius: 10px;
+    border: 1px solid var(--border-light);
+    box-shadow: var(--shadow-sm);
+    transition: all 0.2s;
+}
+
+.btn-back-dash:hover {
+    color: var(--blue-primary);
+    border-color: var(--blue-primary);
+}
+
+.brand-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: #EFF6FF;
+    color: var(--blue-primary);
+    border: 1px solid #BFDBFE;
+    padding: 8px 16px;
+    border-radius: 99px;
+    font-size: 0.78rem;
+    font-weight: 800;
+}
+
+.dot-live {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: #10B981;
+    box-shadow: 0 0 0 4px rgba(16, 185, 129, 0.2);
+}
+
+.briefing-card {
+    background: var(--bg-surface);
+    border-radius: 20px;
+    border: 1px solid var(--border-light);
+    box-shadow: var(--shadow-md);
+    padding: 32px;
+}
+
+.bc-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 24px;
+    padding-bottom: 24px;
+    border-bottom: 1px solid var(--border-light);
+    margin-bottom: 24px;
+}
+
+.bc-badge {
+    display: inline-block;
+    background: #E0F2FE;
+    color: #0369A1;
+    font-weight: 800;
+    font-size: 0.76rem;
+    padding: 4px 12px;
+    border-radius: 99px;
+    margin-bottom: 8px;
+}
+
+.bc-title {
+    font-size: 1.75rem;
+    font-weight: 800;
+    color: var(--text-main);
+    margin-bottom: 6px;
+}
+
+.bc-subtitle {
+    color: var(--text-muted);
+    font-size: 0.92rem;
+}
+
+.cat-badge-logo {
+    width: 88px;
+    height: 88px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #FEF08A 0%, #FDE047 100%);
+    border: 4px solid #16A34A;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    flex-shrink: 0;
+    box-shadow: 0 6px 16px rgba(22, 163, 74, 0.2);
+}
+
+.cat-badge-logo span { font-size: 0.55rem; font-weight: 800; color: #1E293B; }
+.cat-badge-logo strong { font-size: 1.35rem; font-weight: 900; color: #15803D; line-height: 1; }
+.cat-badge-logo small { font-size: 0.52rem; font-weight: 800; color: #0F172A; }
+
+.bc-info-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 14px;
+    margin-bottom: 28px;
+}
+
+.info-box {
+    background: var(--bg-soft);
+    border: 1px solid var(--border-light);
+    padding: 16px;
+    border-radius: 14px;
+}
+
+.info-box.highlight-blue {
+    background: #EFF6FF;
+    border-color: #BFDBFE;
+}
+
+.info-box.highlight-cyan {
+    background: #ECFEFF;
+    border-color: #A5F3FC;
+}
+
+.ib-label {
+    display: block;
+    font-size: 0.76rem;
+    font-weight: 700;
+    color: var(--text-muted);
+    margin-bottom: 4px;
+}
+
+.ib-val {
+    font-size: 1.15rem;
+    font-weight: 800;
+    color: var(--text-main);
+}
+
+.bc-section {
+    margin-bottom: 28px;
+}
+
+.sec-heading {
+    font-size: 1.05rem;
+    font-weight: 800;
+    margin-bottom: 14px;
+    color: var(--text-main);
+}
+
+.table-wrap { overflow-x: auto; }
+
+.briefing-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.88rem;
+    border: 1px solid var(--border-light);
+    border-radius: 12px;
+    overflow: hidden;
+}
+
+.briefing-table th {
+    background: #F8FAFC;
+    padding: 12px 16px;
+    text-align: left;
+    font-weight: 800;
+    color: var(--text-secondary);
+    border-bottom: 1px solid var(--border-light);
+}
+
+.briefing-table td {
+    padding: 12px 16px;
+    border-bottom: 1px solid var(--border-light);
+}
+
+.order-pill {
+    background: #DBEAFE;
+    color: #1E40AF;
+    font-weight: 800;
+    font-size: 0.75rem;
+    padding: 3px 10px;
+    border-radius: 99px;
+}
+
+.pg-badge {
+    background: #DCFCE7;
+    color: #15803D;
+    font-weight: 800;
+    font-size: 0.78rem;
+    padding: 3px 10px;
+    border-radius: 6px;
+}
+
+.rules-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 14px;
+}
+
+.rule-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    background: var(--bg-soft);
+    border: 1px solid var(--border-light);
+    padding: 16px;
+    border-radius: 14px;
+}
+
+.ri-icon {
+    width: 32px;
+    height: 32px;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 800;
+    color: #fff;
+    flex-shrink: 0;
+}
+
+.bg-emerald { background: #16A34A; }
+.bg-rose { background: #E11D48; }
+.bg-blue { background: #2563EB; }
+.bg-amber { background: #D97706; }
+
+.rule-item h4 { font-size: 0.92rem; font-weight: 800; margin-bottom: 4px; }
+.rule-item p { font-size: 0.82rem; color: var(--text-secondary); }
+
+.custom-instruction-box {
+    margin-top: 14px;
+    background: #FFFBEB;
+    border: 1px solid #FDE68A;
+    padding: 14px 18px;
+    border-radius: 12px;
+    font-size: 0.86rem;
+    color: #92400E;
+}
+
+.bc-footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 16px;
+    padding-top: 22px;
+    border-top: 1px solid var(--border-light);
+}
+
+.status-ready-note {
+    font-size: 0.88rem;
+    font-weight: 600;
+    color: var(--text-secondary);
+}
+
+.btn-start-tryout {
+    background: linear-gradient(135deg, #2563EB, #0284C7);
+    color: #fff;
+    border: none;
+    padding: 14px 28px;
+    border-radius: 12px;
+    font-family: inherit;
+    font-size: 1rem;
+    font-weight: 800;
+    cursor: pointer;
+    box-shadow: 0 10px 24px rgba(37, 99, 235, 0.3);
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.btn-start-tryout:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 14px 28px rgba(37, 99, 235, 0.4);
+}
+
+/* ==========================================================================
+   TAHAP 2: MODAL KONFIRMASI MULAI & SELESAI UJIAN
+   ========================================================================== */
+.cat-modal-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(15, 23, 42, 0.55);
+    backdrop-filter: blur(4px);
+    z-index: 2000;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    padding: 16px;
+}
+
+.cat-modal-overlay.open {
+    display: flex;
+}
+
+.cat-modal-box {
+    background: #fff;
+    max-width: 480px;
+    width: 100%;
+    border-radius: 20px;
+    padding: 28px;
+    text-align: center;
+    box-shadow: 0 24px 48px rgba(15, 23, 42, 0.25);
+}
+
+.cm-icon { font-size: 2.8rem; margin-bottom: 10px; }
+.cm-title { font-size: 1.35rem; font-weight: 800; margin-bottom: 8px; }
+.cm-desc { font-size: 0.9rem; color: var(--text-secondary); margin-bottom: 18px; }
+
+.cm-summary {
+    background: #F8FAFC;
+    border: 1px solid var(--border-light);
+    border-radius: 12px;
+    padding: 14px 16px;
+    text-align: left;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    margin-bottom: 16px;
+    font-size: 0.86rem;
+}
+
+.cm-summary div {
+    display: flex;
+    justify-content: space-between;
+}
+
+.cm-checkbox {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    text-align: left;
+    font-size: 0.84rem;
+    font-weight: 600;
+    background: #EFF6FF;
+    border: 1px solid #BFDBFE;
+    padding: 12px;
+    border-radius: 10px;
+    margin-bottom: 20px;
+    cursor: pointer;
+}
+
+.cm-checkbox input { margin-top: 3px; transform: scale(1.15); }
+
+.cm-actions {
+    display: flex;
+    gap: 10px;
+    justify-content: center;
+}
+
+.btn-modal-cancel {
+    flex: 1;
+    padding: 12px 16px;
+    border-radius: 10px;
+    border: 1px solid var(--border-color);
+    background: #fff;
+    font-family: inherit;
+    font-weight: 700;
+    cursor: pointer;
+}
+
+.btn-modal-confirm {
+    flex: 1.4;
+    padding: 12px 18px;
+    border-radius: 10px;
+    border: none;
+    background: linear-gradient(135deg, #16A34A, #059669);
+    color: #fff;
+    font-family: inherit;
+    font-weight: 800;
+    cursor: pointer;
+    transition: opacity 0.2s;
+}
+
+.btn-modal-confirm:disabled {
+    opacity: 0.45;
+    cursor: not-allowed;
+}
+
+/* ==========================================================================
+   TAHAP 3: HALAMAN UJIAN CAT (MEREPLIKASI BAGIAN A, B, DAN C DARI GAMBAR)
+   ========================================================================== */
+.cat-exam-wrapper {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    background: #F4F7FB;
+}
+
+/* --------------------------------------------------------------------------
+   BAGIAN A: HEADER BAR INFORMASI PESERTA & TIMER (ATAS)
+   -------------------------------------------------------------------------- */
+.cat-header-bar {
+    background: linear-gradient(180deg, #FFFFFF 0%, #F8FAFC 100%);
+    border-bottom: 2px solid #CBD5E1;
+    padding: 12px 24px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 20px;
+    box-shadow: 0 2px 10px rgba(15, 23, 42, 0.04);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+}
+
+.cat-brand-left {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    flex-shrink: 0;
+}
+
+.cat-circle-emblem {
+    width: 68px;
+    height: 68px;
+    border-radius: 50%;
+    background: radial-gradient(circle, #FEF9C3 0%, #FDE047 100%);
+    border: 3px solid #16A34A;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    box-shadow: 0 3px 10px rgba(22, 163, 74, 0.2);
+}
+
+.cce-top { font-size: 0.38rem; font-weight: 800; color: #1E293B; letter-spacing: 0.2px; }
+.cce-mid { font-size: 1.25rem; font-weight: 900; color: #15803D; line-height: 1; }
+.cce-bot { font-size: 0.44rem; font-weight: 800; color: #0F172A; }
+
+.cst-main {
+    display: block;
+    font-size: 1.05rem;
+    font-weight: 800;
+    color: #0284C7;
+}
+
+.cst-sub {
+    display: block;
+    font-size: 0.78rem;
+    font-weight: 600;
+    color: var(--text-muted);
+}
+
+/* Strip Informasi Peserta (Kotak A) */
+.cat-info-strip {
+    flex: 1;
+    max-width: 980px;
+    background: rgba(255, 255, 255, 0.95);
+    border: 1px solid #E2E8F0;
+    border-radius: 14px;
+    padding: 10px 18px;
+    display: grid;
+    grid-template-columns: repeat(6, auto) 150px;
+    align-items: center;
+    gap: 16px;
+    box-shadow: 0 4px 14px rgba(2, 132, 199, 0.06);
+}
+
+.cis-col {
+    text-align: center;
+    padding: 0 6px;
+}
+
+.cis-label {
+    display: block;
+    font-size: 0.78rem;
+    font-weight: 800;
+    color: #1E293B;
+    margin-bottom: 6px;
+    white-space: nowrap;
+}
+
+.cis-val {
+    display: block;
+    font-size: 0.92rem;
+    font-weight: 800;
+    color: #0F172A;
+}
+
+.cis-action-timer {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 6px;
+}
+
+.btn-finish-top {
+    background: linear-gradient(180deg, #E2E8F0 0%, #CBD5E1 100%);
+    color: #1E293B;
+    border: 1px solid #94A3B8;
+    border-radius: 6px;
+    padding: 5px 10px;
+    font-family: inherit;
+    font-size: 0.78rem;
+    font-weight: 800;
+    cursor: pointer;
+    transition: all 0.15s;
+}
+
+.btn-finish-top:hover {
+    background: #EF4444;
+    color: #fff;
+    border-color: #DC2626;
+}
+
+.cat-digital-timer {
+    background: var(--timer-mint);
+    color: var(--timer-text);
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 1.25rem;
+    font-weight: 800;
+    text-align: center;
+    padding: 4px 8px;
+    border-radius: 6px;
+    border: 1px solid #5EEAD4;
+    letter-spacing: 0.5px;
+}
+
+.cat-digital-timer.warning {
+    background: #FECACA;
+    color: #991B1B;
+    border-color: #F87171;
+    animation: pulseWarn 1s infinite;
+}
+
+@keyframes pulseWarn {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.03); }
+}
+
+/* --------------------------------------------------------------------------
+   LAYOUT UTAMA: BAGIAN C (KIRI) & BAGIAN B (KANAN)
+   -------------------------------------------------------------------------- */
+.cat-main-layout {
+    flex: 1;
+    display: grid;
+    grid-template-columns: 1fr 290px;
+    gap: 20px;
+    padding: 20px 24px 40px;
+    max-width: 1440px;
+    width: 100%;
+    margin: 0 auto;
+    align-items: start;
+}
+
+/* --------------------------------------------------------------------------
+   BAGIAN C: AREA SOAL & TOMBOL SIMPAN / LEWATKAN (KIRI)
+   -------------------------------------------------------------------------- */
+.cat-question-area {
+    background: #FFFFFF;
+    border: 1px solid #E2E8F0;
+    border-radius: 14px;
+    padding: 18px 22px 24px;
+    box-shadow: var(--shadow-sm);
+}
+
+.cat-topic-banner {
+    background: #F8FAFC;
+    border: 1px solid #E2E8F0;
+    border-radius: 8px;
+    padding: 9px 14px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-bottom: 14px;
+}
+
+.ctb-left {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.ctb-category-badge {
+    background: #2563EB;
+    color: #fff;
+    font-size: 0.72rem;
+    font-weight: 800;
+    padding: 3px 9px;
+    border-radius: 6px;
+}
+
+.ctb-topic-title {
+    font-size: 0.95rem;
+    font-weight: 800;
+    color: #0F172A;
+    text-transform: uppercase;
+}
+
+.question-stopwatch {
+    font-size: 0.78rem;
+    color: var(--text-muted);
+    background: #EFF6FF;
+    padding: 4px 10px;
+    border-radius: 99px;
+    border: 1px solid #BFDBFE;
+}
+
+/* Fieldset Soal No.X Persis Gambar C */
+.cat-question-fieldset {
+    border: 1px solid #CBD5E1;
+    border-radius: 8px;
+    padding: 18px 20px 22px;
+    margin-bottom: 20px;
+    background: #FFFFFF;
+}
+
+.cat-question-legend {
+    font-size: 1.05rem;
+    font-weight: 800;
+    color: #0F172A;
+    padding: 0 8px;
+}
+
+.cat-question-text {
+    font-size: 0.98rem;
+    color: #1E293B;
+    line-height: 1.65;
+    margin-bottom: 16px;
+    white-space: pre-line;
+}
+
+.cat-question-image {
+    margin-bottom: 16px;
+}
+
+.cat-question-image img {
+    max-width: 100%;
+    max-height: 320px;
+    border-radius: 8px;
+    border: 1px solid var(--border-light);
+}
+
+/* Pilihan Jawaban Radio A-E */
+.cat-options-list {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.cat-option-row {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    padding: 8px 12px;
+    border-radius: 8px;
+    border: 1px solid transparent;
+    cursor: pointer;
+    transition: background 0.15s, border-color 0.15s;
+}
+
+.cat-option-row:hover {
+    background: #F0F9FF;
+    border-color: #BAE6FD;
+}
+
+.cat-option-row.selected {
+    background: #EFF6FF;
+    border-color: #60A5FA;
+    font-weight: 600;
+}
+
+.cat-option-row input[type="radio"] {
+    margin-top: 4px;
+    width: 16px;
+    height: 16px;
+    accent-color: #2563EB;
+    cursor: pointer;
+    flex-shrink: 0;
+}
+
+.opt-label-char {
+    font-weight: 700;
+    color: #0F172A;
+    min-width: 18px;
+}
+
+.opt-content-body {
+    flex: 1;
+    font-size: 0.94rem;
+    color: #1E293B;
+}
+
+.opt-content-body img {
+    display: block;
+    max-width: 240px;
+    margin-top: 6px;
+    border-radius: 6px;
+    border: 1px solid var(--border-light);
+}
+
+/* Tombol Bawah: Simpan dan Lanjutkan & Lewatkan soal ini */
+.cat-bottom-actions {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    flex-wrap: wrap;
+}
+
+.btn-cat-action {
+    background: linear-gradient(180deg, #3B95EF 0%, #2374C7 100%);
+    color: #FFFFFF;
+    border: 1px solid #1D62A9;
+    padding: 11px 24px;
+    border-radius: 8px;
+    font-family: inherit;
+    font-size: 0.95rem;
+    font-weight: 800;
+    cursor: pointer;
+    box-shadow: 0 3px 8px rgba(35, 116, 199, 0.28);
+    transition: all 0.15s;
+}
+
+.btn-cat-action:hover {
+    background: linear-gradient(180deg, #257FD9 0%, #1B5FA6 100%);
+    transform: translateY(-1px);
+}
+
+.cat-doubt-toggle {
+    margin-left: auto;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: #FEF3C7;
+    color: #92400E;
+    border: 1px solid #FCD34D;
+    padding: 9px 14px;
+    border-radius: 8px;
+    font-size: 0.84rem;
+    font-weight: 800;
+    cursor: pointer;
+}
+
+/* --------------------------------------------------------------------------
+   BAGIAN B: PANEL GRID NAVIGASI NOMOR SOAL 5 KOLOM (KANAN)
+   -------------------------------------------------------------------------- */
+.cat-sidebar-nav {
+    position: sticky;
+    top: 105px;
+}
+
+.csn-card {
+    background: #FFFFFF;
+    border: 1px solid #E2E8F0;
+    border-radius: 14px;
+    padding: 16px;
+    box-shadow: var(--shadow-sm);
+}
+
+.csn-head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 12px;
+    padding-bottom: 8px;
+    border-bottom: 1px solid #F1F5F9;
+    font-size: 0.82rem;
+    font-weight: 800;
+    color: var(--text-secondary);
+}
+
+/* Grid 5 Kolom Persis Gambar B */
+.cat-number-grid {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 5px;
+    max-height: 360px;
+    overflow-y: auto;
+    padding-right: 2px;
+}
+
+.cat-num-tile {
+    height: 36px;
+    border-radius: 4px;
+    border: 1px solid rgba(0, 0, 0, 0.15);
+    color: #FFFFFF;
+    font-family: inherit;
+    font-size: 0.78rem;
+    font-weight: 800;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 6px;
+    cursor: pointer;
+    user-select: none;
+    transition: transform 0.1s, box-shadow 0.1s;
+}
+
+/* Merah = Belum Dijawab (Default seperti nomor 2-40 di gambar B) */
+.cat-num-tile.unanswered {
+    background: linear-gradient(180deg, #EA5455 0%, #D63939 100%);
+}
+
+/* Hijau = Sudah Dijawab + Huruf Jawaban (Seperti "1 A" di gambar B) */
+.cat-num-tile.answered {
+    background: linear-gradient(180deg, #16A34A 0%, #15803D 100%);
+}
+
+/* Kuning/Amber = Ragu-ragu */
+.cat-num-tile.doubtful {
+    background: linear-gradient(180deg, #F59E0B 0%, #D97706 100%);
+}
+
+/* Highlight Soal yang Sedang Dibuka */
+.cat-num-tile.active-current {
+    outline: 3px solid #1D4ED8;
+    outline-offset: 1px;
+    transform: scale(1.04);
+    z-index: 2;
+}
+
+.tile-num {
+    text-decoration: underline;
+}
+
+.tile-ans-badge {
+    background: rgba(255, 255, 255, 0.24);
+    color: #FEF08A;
+    font-size: 0.7rem;
+    font-weight: 900;
+    padding: 1px 4px;
+    border-radius: 3px;
+}
+
+/* Tombol Panah Navigasi Bundar Kiri & Kanan (Di Bawah Grid B) */
+.cat-arrow-controls {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 16px;
+    margin-top: 16px;
+    padding-top: 12px;
+    border-top: 1px solid #F1F5F9;
+}
+
+.btn-circle-arrow {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: radial-gradient(circle at 30% 30%, #E0F2FE, #38BDF8 60%, #0284C7);
+    border: 2px solid #0369A1;
+    color: #FFFFFF;
+    font-size: 1.2rem;
+    font-weight: 900;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    box-shadow: 0 4px 10px rgba(2, 132, 199, 0.3);
+    transition: transform 0.15s;
+}
+
+.btn-circle-arrow:hover {
+    transform: scale(1.08);
+}
+
+.csn-legend {
+    margin-top: 14px;
+    padding-top: 10px;
+    border-top: 1px dashed #E2E8F0;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    font-size: 0.75rem;
+    font-weight: 700;
+    color: var(--text-muted);
+}
+
+.leg-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.leg-box {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 34px;
+    height: 20px;
+    border-radius: 4px;
+    color: #fff;
+    font-size: 0.68rem;
+    font-weight: 800;
+}
+
+.leg-green { background: #15803D; }
+.leg-red { background: #DC2626; }
+.leg-amber { background: #D97706; }
+
+/* ==========================================================================
+   RESPONSIVE TABLET & HANDPHONE
+   ========================================================================== */
+@media (max-width: 1100px) {
+    .cat-header-bar {
+        flex-direction: column;
+        align-items: stretch;
+    }
+    .cat-info-strip {
+        max-width: 100%;
+        grid-template-columns: repeat(3, 1fr);
+    }
+    .cis-action-timer {
+        grid-column: span 3;
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
+    }
+}
+
+@media (max-width: 900px) {
+    .bc-info-grid, .rules-grid {
+        grid-template-columns: 1fr 1fr;
+    }
+    .cat-main-layout {
+        grid-template-columns: 1fr;
+    }
+    .cat-sidebar-nav {
+        position: static;
+    }
+}
+
+@media (max-width: 580px) {
+    .bc-header { flex-direction: column-reverse; text-align: center; }
+    .bc-info-grid, .rules-grid { grid-template-columns: 1fr; }
+    .cat-info-strip { grid-template-columns: repeat(2, 1fr); gap: 10px; }
+    .cis-action-timer { grid-column: span 2; }
+    .cat-bottom-actions { flex-direction: column; align-items: stretch; }
+    .cat-doubt-toggle { margin-left: 0; justify-content: center; }
+}

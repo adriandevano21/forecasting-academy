@@ -213,7 +213,8 @@
                             <div>
                                 <span class="sc-title">Paket Aktif Saya</span>
                                 <h3 class="sc-value">{{ $myAccesses->where('is_active', true)->count() }}
-                                    <small>Paket</small></h3>
+                                    <small>Paket</small>
+                                </h3>
                             </div>
                         </div>
                         <div class="stat-card">
@@ -268,7 +269,8 @@
                                                         {{ number_format($diag->avg_time_seconds, 0) }} dtk</span>
                                                     <span
                                                         class="status-badge badge-{{ $stClass }}">{{ $diag->status_label }}
-                                                        ({{ number_format($diag->accuracy_percentage, 0) }}%)</span>
+                                                        ({{ number_format($diag->accuracy_percentage, 0) }}%)
+                                                    </span>
                                                 </div>
                                             </div>
                                             <div class="progress-bar-bg">
@@ -361,7 +363,8 @@
                         <span class="section-tag">Evaluasi Cerdas Berbasis Data</span>
                         <h2>Rapor Competency Diagnostic & Analisis Waktu per Soal</h2>
                         <p>Memetakan penguasaan Anda di setiap sub-topik menjadi <strong>Unggul (≥75%)</strong>,
-                            <strong>Cukup (50–74%)</strong>, dan <strong>Lemah (&lt;50%)</strong>.</p>
+                            <strong>Cukup (50–74%)</strong>, dan <strong>Lemah (&lt;50%)</strong>.
+                        </p>
                     </div>
 
                     @if ($diagnostics->count() > 0)
@@ -383,7 +386,8 @@
                                             <div class="dcm-box">
                                                 <small>Akurasi Jawaban</small>
                                                 <strong>{{ number_format($diag->accuracy_percentage, 0) }}%
-                                                    ({{ $diag->total_correct }}/{{ $diag->total_answered }})</strong>
+                                                    ({{ $diag->total_correct }}/{{ $diag->total_answered }})
+                                                </strong>
                                             </div>
                                             <div class="dcm-box">
                                                 <small>Kecepatan Rata-rata</small>
@@ -488,11 +492,10 @@
                                             <strong>{{ $to->user_attempts_count > 0 ? $to->user_attempts_count . 'x (Skor: ' . $to->best_score . ')' : 'Belum Pernah' }}</strong>
                                         </div>
                                     </div>
-                                    <button type="button" class="btn-primary btn-block trigger-info-modal"
-                                        data-title="Mulai CBT: {{ $to->title }}"
-                                        data-msg="Sesi ujian '{{ $to->title }}' ({{ $to->duration_minutes }} menit) siap dimulai.">
-                                        Mulai Kerjakan
-                                    </button>
+                                    <a href="{{ route('cat.show', $to->id) }}" class="btn-primary btn-block"
+                                        style="text-decoration: none; text-align: center;">
+                                        🚀 Mulai Kerjakan
+                                    </a>
                                 </div>
                             </div>
                         @endforeach

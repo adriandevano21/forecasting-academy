@@ -5,6 +5,7 @@ use App\Http\Controllers\BerandaController;
 use App\Http\Controllers\GoogleAuthController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\AdminController;
+use App\Http\Controllers\CatExamController;
 
 // Halaman Landing Page (Beranda)
 Route::get('/', [BerandaController::class, 'index'])->name('beranda');
@@ -64,5 +65,22 @@ Route::middleware(['auth'])->group(function () {
 
         // 8. Hapus Data Universal untuk Tabel Mana Saja
         Route::delete('/delete/{table}/{id}', [AdminController::class, 'destroyRecord'])->name('delete');
+    });
+
+    // =========================================================================
+    // ROUTE MESIN UJIAN CAT (COMPUTER ASSISTED TEST) PESERTA
+    // =========================================================================
+    Route::prefix('dashboard/tryout')->name('cat.')->group(function () {
+        // 1. Halaman Penjelasan Tryout & Tampilan Ujian CAT
+        Route::get('/{id}/exam', [CatExamController::class, 'show'])->name('show');
+
+        // 2. Endpoint AJAX Konfirmasi Mulai Ujian (Generate Soal & Mulai Timer)
+        Route::post('/{id}/start', [CatExamController::class, 'startExam'])->name('start');
+
+        // 3. Endpoint AJAX Simpan Jawaban & Akumulasi Waktu per Soal (time_spent_seconds)
+        Route::post('/attempt/{attemptId}/answer', [CatExamController::class, 'saveAnswer'])->name('answer');
+
+        // 4. Endpoint AJAX Selesai Ujian & Hitung Competency Diagnostics
+        Route::post('/attempt/{attemptId}/finish', [CatExamController::class, 'finishExam'])->name('finish');
     });
 });

@@ -23,6 +23,9 @@ Route::middleware(['auth'])->group(function () {
     // Dashboard Siswa & Mentor
     Route::get('/student/dashboard', [DashboardController::class, 'index'])->name('dashboard');
     Route::post('/student/dashboard/password', [DashboardController::class, 'updatePassword'])->name('dashboard.password.update');
+    Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
+    Route::get('/dashboard/tryout-analysis/{attempt}', [DashboardController::class, 'analysis'])->name('dashboard.analysis');
+    Route::post('/dashboard/password', [DashboardController::class, 'updatePassword'])->name('dashboard.password.update');
 
     // =========================================================================
     // PANEL KHUSUS ADMIN (Mengatur CMS Beranda & Seluruh 16 Tabel Database)

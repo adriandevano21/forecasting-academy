@@ -1,17 +1,30 @@
 /* ==========================================================================
-   JAVASCRIPT DASHBOARD SISWA FORECASTING ACADEMY
+   JAVASCRIPT DASHBOARD & ANALISIS TRYOUT - FORECASTING ACADEMY
    Lokasi: public/dashboard/js/dashboard.js
    ========================================================================== */
 document.addEventListener('DOMContentLoaded', () => {
 
-    /* 1. SISTEM NAVIGASI TAB INSTAN (SIDEBAR, BOTTOM NAV HP, & TOMBOL PINTAS) */
     const allTabButtons = document.querySelectorAll('[data-tab]');
     const allSwitchTriggers = document.querySelectorAll('[data-switch-tab]');
     const allTabPanes = document.querySelectorAll('.tab-pane');
     const sidebar = document.getElementById('sidebar');
     const sidebarOverlay = document.getElementById('sidebar-overlay');
+    const dashboardBaseUrl = document.body.getAttribute('data-dashboard-url') || '/dashboard';
 
-    function activateTab(targetTabId) {
+    /* 1. SISTEM NAVIGASI TAB PINTAR (BEKERJA DI INDEX MAUPUN HALAMAN ANALISIS) */
+    function activateTab(targetTabId, updateUrl = true) {
+        if (!targetTabId) return;
+
+        // Jika saat ini berada di halaman lain (misal: halaman analisis per tryout),
+        // arahkan kembali ke halaman utama dashboard dengan query ?tab=...
+        if (allTabPanes.length === 0) {
+            window.location.href = `${dashboardBaseUrl}?tab=${targetTabId}`;
+            return;
+        }
+
+        const targetPane = document.getElementById(targetTabId);
+        if (!targetPane) return;
+
         allTabPanes.forEach(pane => {
             pane.classList.toggle('active', pane.id === targetTabId);
         });
@@ -20,13 +33,25 @@ document.addEventListener('DOMContentLoaded', () => {
             btn.classList.toggle('active', btn.getAttribute('data-tab') === targetTabId);
         });
 
-        // Tutup drawer sidebar otomatis jika di layar handphone
+        if (updateUrl && window.history.replaceState) {
+            const newUrl = new URL(window.location.href);
+            newUrl.searchParams.set('tab', targetTabId);
+            window.history.replaceState({}, '', newUrl);
+        }
+
         if (window.innerWidth <= 820) {
             sidebar?.classList.remove('open');
             sidebarOverlay?.classList.remove('active');
         }
 
         window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    // Cek apakah ada parameter ?tab= di URL saat halaman dibuka
+    const urlParams = new URLSearchParams(window.location.search);
+    const initialTab = urlParams.get('tab');
+    if (initialTab && allTabPanes.length > 0) {
+        activateTab(initialTab, false);
     }
 
     allTabButtons.forEach(btn => {
@@ -37,7 +62,28 @@ document.addEventListener('DOMContentLoaded', () => {
         trigger.addEventListener('click', () => activateTab(trigger.getAttribute('data-switch-tab')));
     });
 
-    /* 2. DRAWER SIDEBAR UNTUK HANDPHONE */
+    /* 2. FILTER TABEL LOG SOAL DI HALAMAN ANALISIS TRYOUT */
+    const filterPills = document.querySelectorAll('[data-filter-log]');
+    const logRows = document.querySelectorAll('#question-log-table tbody tr');
+
+    filterPills.forEach(pill => {
+        pill.addEventListener('click', () => {
+            const filterType = pill.getAttribute('data-filter-log');
+            filterPills.forEach(p => p.classList.remove('active'));
+            pill.classList.add('active');
+
+            logRows.forEach(row => {
+                const rowType = row.getAttribute('data-log-type');
+                if (filterType === 'all' || rowType === filterType) {
+                    row.style.display = '';
+                } else {
+                    row.style.display = 'none';
+                }
+            });
+        });
+    });
+
+    /* 3. DRAWER SIDEBAR UNTUK HANDPHONE */
     const btnOpenSidebar = document.getElementById('sidebar-open');
     const btnCloseSidebar = document.getElementById('sidebar-close');
 
@@ -54,7 +100,7 @@ document.addEventListener('DOMContentLoaded', () => {
     btnCloseSidebar?.addEventListener('click', closeMobileSidebar);
     sidebarOverlay?.addEventListener('click', closeMobileSidebar);
 
-    /* 3. MODAL INTERAKTIF (SIMULASI CBT, PSIKOTES, & VIDEO MATERI) */
+    /* 4. MODAL INTERAKTIF */
     const dashModal = document.getElementById('dash-modal');
     const dmTitle = document.getElementById('dm-title');
     const dmBody = document.getElementById('dm-body');
@@ -86,7 +132,7 @@ document.addEventListener('DOMContentLoaded', () => {
         if (e.target === dashModal) dashModal.classList.remove('active');
     });
 
-    /* 4. CUSTOM CURSOR & EFEK PERCIKAN KLIK (SPARK + RIPPLE) */
+    /* 5. CUSTOM CURSOR & EFEK PERCIKAN KLIK */
     const cursorDot = document.getElementById('cursor-dot');
     const cursorOutline = document.getElementById('cursor-outline');
     let mouseX = window.innerWidth / 2;
@@ -114,7 +160,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
     animateCursor();
 
-    document.querySelectorAll('a, button, [data-cursor-hover]').forEach(el => {
+    document.querySelectorAll('a, button, select, .stat-card').forEach(el => {
         el.addEventListener('mouseenter', () => cursorOutline?.classList.add('cursor-hover'));
         el.addEventListener('mouseleave', () => cursorOutline?.classList.remove('cursor-hover'));
     });
@@ -143,7 +189,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
-    /* 5. ANIMASI PARTIKEL JARINGAN DI BACKGROUND CANVAS */
+    /* 6. ANIMASI PARTIKEL JARINGAN DI BACKGROUND CANVAS */
     const canvas = document.getElementById('bg-canvas');
     if (canvas) {
         const ctx = canvas.getContext('2d');
